@@ -6,7 +6,7 @@
   <title>Is My Rental Covered? | Rental Coverage Risk Score</title>
   <meta
     name="description"
-    content="Get a quick rental property insurance risk score and see whether your current coverage may leave you exposed."
+    content="Get a quick rental property insurance risk score and request a coverage review from a licensed Farmers Insurance® agent."
   />
   <style>
     :root {
@@ -361,6 +361,23 @@
       color: var(--text);
     }
 
+    .check-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      line-height: 1.45;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .check-label input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      flex: 0 0 auto;
+    }
+
     input, textarea {
       width: 100%;
       border: 1px solid var(--border);
@@ -427,6 +444,29 @@
       margin-inline: auto;
     }
 
+    .policy-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .policy-box h3 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+    }
+
+    .policy-box p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .policy-box p + p {
+      margin-top: 10px;
+    }
+
     .success-note,
     .error-note {
       margin-top: 12px;
@@ -477,7 +517,8 @@
       .section-card,
       .quiz-card,
       .hero-card,
-      .quiz-meta {
+      .quiz-meta,
+      .policy-box {
         padding: 20px;
       }
       .hero-actions { flex-direction: column; }
@@ -501,6 +542,9 @@
           <a class="btn btn-secondary" href="#why">What We Check</a>
         </div>
         <div class="micro">No spam. No obligation. Quick review.</div>
+        <div class="micro" style="margin-top:8px;">
+          This site is operated by a licensed Farmers Insurance® agent offering coverage reviews and quotes.
+        </div>
       </div>
 
       <div class="hero-card">
@@ -626,11 +670,10 @@
           <div class="lead-form-wrap" id="leadFormWrap">
             <h3 style="margin:0 0 8px; font-size:1.6rem;">Get Your Full Coverage Review</h3>
             <p class="section-sub" style="margin-bottom:16px; max-width:none;">
-              I can take a quick look at your setup and show you where things may be strong,
-              weak, or worth tightening up.
+              Request a review from a licensed Farmers Insurance® agent to better understand whether your current rental property coverage may have gaps.
             </p>
 
-            <!-- Replace the action URL below with your Formspree endpoint -->
+            <!-- Replace the action URL below with your real form endpoint -->
             <form id="leadForm" action="https://formspree.io/f/your-form-id" method="POST">
               <div class="field-grid">
                 <label>
@@ -649,7 +692,7 @@
                   <input type="tel" name="phone" placeholder="(555) 555-5555" required />
                 </label>
                 <label>
-                  Property Address <span class="fine">(optional but helpful)</span>
+                  Property Address <span class="fine">(optional)</span>
                   <input type="text" name="address" placeholder="123 Main St, San Jose, CA" />
                 </label>
               </div>
@@ -663,14 +706,21 @@
                 ></textarea>
               </label>
 
+              <label class="check-label">
+                <input type="checkbox" name="tcpaConsent" required />
+                <span>
+                  By submitting this form, you agree that a licensed Farmers Insurance® agent may contact you by call, text, or automated dialing system regarding insurance products and services at the number provided. Consent is not a condition of purchase.
+                </span>
+              </label>
+
               <input type="hidden" name="riskScore" id="riskScoreInput" />
               <input type="hidden" name="riskLevel" id="riskLevelInput" />
               <input type="hidden" name="sourcePage" value="IsMyRentalCovered.com" />
 
-              <button class="btn btn-primary" type="submit">See My Full Review</button>
-              <div class="fine">Quick turnaround. No obligation. Local advisor.</div>
+              <button class="btn btn-primary" type="submit">Get My Coverage Review</button>
+              <div class="fine">No obligation. Coverage review provided by a licensed Farmers Insurance® agent.</div>
               <div class="success-note" id="successNote">Thanks — your request has been sent.</div>
-              <div class="error-note" id="errorNote">Something went wrong. Please try again or swap in your real form endpoint.</div>
+              <div class="error-note" id="errorNote">Something went wrong. Please try again or replace the form handler with your live endpoint.</div>
             </form>
           </div>
         </div>
@@ -687,15 +737,15 @@
         <div class="trust-grid">
           <div class="trust-card">
             <h3>Second Opinion</h3>
-            <p>Even if you already have coverage, it helps to verify that it is set up correctly for a rental.</p>
+            <p>Even if you already have coverage, it helps to verify that it is set up correctly for a rental property.</p>
           </div>
           <div class="trust-card">
             <h3>No Pressure</h3>
-            <p>This is designed to diagnose risk first, not force you into a quote before you are ready.</p>
+            <p>This page is designed to help you request a coverage review, not to make misleading claims or create confusion.</p>
           </div>
           <div class="trust-card">
             <h3>California Focus</h3>
-            <p>Built for the questions and concerns California rental property owners run into most often.</p>
+            <p>Built around the questions California rental property owners commonly have about coverage, liability, and lost rent.</p>
           </div>
         </div>
       </div>
@@ -710,10 +760,27 @@
         <a class="btn btn-primary" href="#quiz">Check My Risk Score</a>
       </div>
     </section>
+
+    <section>
+      <div class="wrap policy-box">
+        <h3>Privacy & Data Use</h3>
+        <p>
+          We collect your information for the purpose of providing insurance quotes, coverage reviews, and related follow-up from a licensed Farmers Insurance® agent. Your information should only be used in accordance with your agency’s privacy, recordkeeping, and consent requirements.
+        </p>
+        <p>
+          Before going live, this website should be submitted through Farmers’ internal marketing/compliance review process and linked to your final approved privacy policy.
+        </p>
+      </div>
+    </section>
   </main>
 
   <footer>
-    Demo landing page for IsMyRentalCovered.com — replace the form handler and branding details before going live.
+    <p>
+      This website is operated by a licensed Farmers Insurance® agent and is not the official website of Farmers Insurance®. Coverage availability, eligibility, and pricing may vary by state and individual circumstances.
+    </p>
+    <p>
+      © 2026 | Licensed Farmers Insurance® Agent | All Rights Reserved
+    </p>
   </footer>
 
   <script>
