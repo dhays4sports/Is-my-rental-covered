@@ -138,7 +138,8 @@
     .section-card,
     .quiz-card,
     .policy-box,
-    .quiz-meta {
+    .quiz-meta,
+    .tool-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
@@ -180,7 +181,8 @@
       padding: 26px 0;
     }
 
-    .section-card {
+    .section-card,
+    .tool-card {
       padding: 28px;
     }
 
@@ -197,7 +199,8 @@
     }
 
     .risk-grid,
-    .trust-grid {
+    .trust-grid,
+    .tool-grid {
       display: grid;
       gap: 16px;
     }
@@ -206,14 +209,16 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .trust-grid {
+    .trust-grid,
+    .tool-grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .risk-item,
     .trust-card,
     .agent-card,
-    .trust-inline {
+    .trust-inline,
+    .tool-result {
       border: 1px solid var(--border);
       background: var(--surface-soft);
       border-radius: var(--radius-md);
@@ -225,14 +230,16 @@
 
     .risk-item h3,
     .trust-card h3,
-    .agent-card h3 {
+    .agent-card h3,
+    .tool-card h3 {
       margin: 0 0 8px;
       font-size: 16px;
     }
 
     .risk-item p,
     .trust-card p,
-    .agent-card p {
+    .agent-card p,
+    .tool-card p {
       margin: 0;
       color: var(--muted);
       font-size: 15px;
@@ -370,14 +377,16 @@
 
     .result-points,
     .trust-bullets,
-    .personalized-points {
+    .personalized-points,
+    .tool-list {
       margin: 0;
       padding-left: 18px;
     }
 
     .result-points li,
     .trust-bullets li,
-    .personalized-points li {
+    .personalized-points li,
+    .tool-list li {
       margin-bottom: 8px;
     }
 
@@ -411,7 +420,8 @@
       font-size: 15px;
     }
 
-    form {
+    form,
+    .tool-form {
       display: grid;
       gap: 14px;
       margin-top: 12px;
@@ -448,7 +458,7 @@
       flex: 0 0 auto;
     }
 
-    input, textarea {
+    input, textarea, select {
       width: 100%;
       border: 1px solid var(--border);
       background: white;
@@ -458,7 +468,7 @@
       color: var(--text);
     }
 
-    input:focus, textarea:focus {
+    input:focus, textarea:focus, select:focus {
       outline: none;
       border-color: var(--primary);
       box-shadow: 0 0 0 4px rgba(15, 98, 254, 0.12);
@@ -484,6 +494,39 @@
       margin-top: 10px;
       font-size: 14px;
       color: var(--muted);
+    }
+
+    .tool-card h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .tool-card .tool-copy {
+      margin-bottom: 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .tool-result {
+      margin-top: 14px;
+      padding: 16px;
+      display: none;
+    }
+
+    .tool-result.active {
+      display: block;
+    }
+
+    .tool-result strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+
+    .tool-cta {
+      margin-top: 12px;
+      font-size: 14px;
+      font-weight: 700;
     }
 
     .cta-band {
@@ -569,7 +612,8 @@
       .quiz-shell,
       .risk-grid,
       .trust-grid,
-      .field-grid {
+      .field-grid,
+      .tool-grid {
         grid-template-columns: 1fr;
       }
 
@@ -584,7 +628,8 @@
       .quiz-card,
       .hero-card,
       .quiz-meta,
-      .policy-box {
+      .policy-box,
+      .tool-card {
         padding: 20px;
       }
       .hero-actions { flex-direction: column; }
@@ -830,6 +875,146 @@
       </div>
     </section>
 
+    <section id="tools">
+      <div class="wrap section-card">
+        <h2 class="section-title">Quick Tools for Landlords</h2>
+        <p class="section-sub">
+          These quick tools are meant to help you pressure-test your setup. They are general educational tools only and not a guarantee of coverage, pricing, or claim outcome.
+        </p>
+
+        <div class="tool-grid">
+          <div class="tool-card">
+            <h3>Loss of Rent Exposure Calculator</h3>
+            <p class="tool-copy">
+              Estimate how much rental income exposure you could be looking at if your property were out of service after a covered loss.
+            </p>
+
+            <div class="tool-form">
+              <label>
+                Monthly Rent
+                <input type="number" id="rentMonthly" placeholder="2500" min="0" step="1" />
+              </label>
+
+              <label>
+                Months Out of Service
+                <select id="rentMonths">
+                  <option value="3">3 months</option>
+                  <option value="6" selected>6 months</option>
+                  <option value="9">9 months</option>
+                  <option value="12">12 months</option>
+                </select>
+              </label>
+
+              <label>
+                Estimated Deductible (optional)
+                <input type="number" id="rentDeductible" placeholder="2500" min="0" step="1" />
+              </label>
+
+              <button class="btn btn-secondary" type="button" id="rentCalcBtn">Calculate Exposure</button>
+            </div>
+
+            <div class="tool-result" id="rentCalcResult">
+              <strong id="rentCalcHeadline"></strong>
+              <p id="rentCalcText" class="fine" style="margin:0;"></p>
+              <div class="tool-cta">
+                <a href="#quiz">Want a second opinion? Take the coverage check above.</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tool-card">
+            <h3>Policy Type Checker</h3>
+            <p class="tool-copy">
+              A quick way to pressure-test whether your situation sounds more like a true landlord setup or something that may deserve a closer look.
+            </p>
+
+            <div class="tool-form">
+              <label>
+                Do you live in the property?
+                <select id="policyLiveThere">
+                  <option value="no" selected>No</option>
+                  <option value="yes">Yes</option>
+                  <option value="part">Part of the time</option>
+                </select>
+              </label>
+
+              <label>
+                Is the property rented to tenants?
+                <select id="policyRented">
+                  <option value="yes" selected>Yes</option>
+                  <option value="no">No</option>
+                  <option value="vacant">Currently vacant between tenants</option>
+                </select>
+              </label>
+
+              <label>
+                Is this property primarily used to generate rental income?
+                <select id="policyIncome">
+                  <option value="yes" selected>Yes</option>
+                  <option value="no">No</option>
+                  <option value="notsure">Not sure</option>
+                </select>
+              </label>
+
+              <button class="btn btn-secondary" type="button" id="policyCheckBtn">Check My Setup</button>
+            </div>
+
+            <div class="tool-result" id="policyCheckResult">
+              <strong id="policyCheckHeadline"></strong>
+              <ul class="tool-list" id="policyCheckList"></ul>
+              <div class="tool-cta">
+                <a href="#quiz">Want a closer look? Take the coverage check above.</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tool-card">
+            <h3>Coverage Gap Checklist</h3>
+            <p class="tool-copy">
+              Check off what you know you already have. This is a fast way to spot where there may still be blind spots.
+            </p>
+
+            <div class="tool-form">
+              <label class="check-label">
+                <input type="checkbox" id="gapLandlordPolicy" />
+                <span>I know I have a true landlord policy</span>
+              </label>
+
+              <label class="check-label">
+                <input type="checkbox" id="gapLossRent" />
+                <span>I know I have loss of rental income coverage</span>
+              </label>
+
+              <label class="check-label">
+                <input type="checkbox" id="gapLiability" />
+                <span>I know my liability limit is at least $500,000</span>
+              </label>
+
+              <label class="check-label">
+                <input type="checkbox" id="gapWater" />
+                <span>I know how water damage is limited on my policy</span>
+              </label>
+
+              <label class="check-label">
+                <input type="checkbox" id="gapOrdinance" />
+                <span>I know I have ordinance/code upgrade protection</span>
+              </label>
+
+              <button class="btn btn-secondary" type="button" id="gapCheckBtn">Check for Gaps</button>
+            </div>
+
+            <div class="tool-result" id="gapCheckResult">
+              <strong id="gapCheckHeadline"></strong>
+              <p id="gapCheckText" class="fine" style="margin:0;"></p>
+              <div class="tool-cta">
+                <a href="#quiz">Want help reviewing those gaps? Take the coverage check above.</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section>
       <div class="wrap section-card">
         <h2 class="section-title">Why Landlords Use This</h2>
@@ -1064,6 +1249,99 @@
           submitBtn.disabled = false;
           submitBtn.textContent = "Request My Review";
         }
+      });
+
+      // Loss of Rent Exposure Calculator
+      const rentCalcBtn = document.getElementById("rentCalcBtn");
+      const rentMonthly = document.getElementById("rentMonthly");
+      const rentMonths = document.getElementById("rentMonths");
+      const rentDeductible = document.getElementById("rentDeductible");
+      const rentCalcResult = document.getElementById("rentCalcResult");
+      const rentCalcHeadline = document.getElementById("rentCalcHeadline");
+      const rentCalcText = document.getElementById("rentCalcText");
+
+      rentCalcBtn.addEventListener("click", () => {
+        const monthly = Number(rentMonthly.value || 0);
+        const months = Number(rentMonths.value || 0);
+        const deductible = Number(rentDeductible.value || 0);
+        const exposure = (monthly * months) + deductible;
+
+        if (!monthly || !months) {
+          rentCalcHeadline.textContent = "Enter your monthly rent and a time period.";
+          rentCalcText.textContent = "This tool is just a simple estimate to help you visualize potential lost rental income exposure.";
+          rentCalcResult.classList.add("active");
+          return;
+        }
+
+        rentCalcHeadline.textContent = `Estimated exposure: $${exposure.toLocaleString()}`;
+        rentCalcText.textContent = `That includes about $${(monthly * months).toLocaleString()} in possible lost rent over ${months} month(s), plus an estimated deductible of $${deductible.toLocaleString()}. This is only a general illustration and not a guarantee of claim outcome or coverage.`;
+        rentCalcResult.classList.add("active");
+      });
+
+      // Policy Type Checker
+      const policyCheckBtn = document.getElementById("policyCheckBtn");
+      const policyLiveThere = document.getElementById("policyLiveThere");
+      const policyRented = document.getElementById("policyRented");
+      const policyIncome = document.getElementById("policyIncome");
+      const policyCheckResult = document.getElementById("policyCheckResult");
+      const policyCheckHeadline = document.getElementById("policyCheckHeadline");
+      const policyCheckList = document.getElementById("policyCheckList");
+
+      policyCheckBtn.addEventListener("click", () => {
+        const liveThere = policyLiveThere.value;
+        const rented = policyRented.value;
+        const income = policyIncome.value;
+        const list = [];
+
+        if (rented === "yes" && income === "yes" && liveThere === "no") {
+          policyCheckHeadline.textContent = "This sounds like it should be reviewed as a true landlord setup.";
+          list.push("If the property is rented out and primarily used to generate rental income, it may deserve closer review than a standard homeowners-style setup.");
+        } else if (liveThere === "part") {
+          policyCheckHeadline.textContent = "This sounds like a mixed-use situation that deserves a closer look.";
+          list.push("Properties used part-time by the owner and part-time as rentals can be easy to misclassify.");
+        } else if (rented === "vacant") {
+          policyCheckHeadline.textContent = "Vacancy between tenants can still deserve a closer look.";
+          list.push("Some policies treat vacancy differently, even if the property is only vacant temporarily.");
+        } else {
+          policyCheckHeadline.textContent = "This may still be worth pressure-testing.";
+          list.push("Even when the setup sounds straightforward, it can still be useful to confirm whether the policy is aligned correctly.");
+        }
+
+        list.push("This tool is only educational and not a formal coverage determination.");
+        policyCheckList.innerHTML = list.map(item => `<li>${item}</li>`).join("");
+        policyCheckResult.classList.add("active");
+      });
+
+      // Coverage Gap Checklist
+      const gapCheckBtn = document.getElementById("gapCheckBtn");
+      const gapCheckResult = document.getElementById("gapCheckResult");
+      const gapCheckHeadline = document.getElementById("gapCheckHeadline");
+      const gapCheckText = document.getElementById("gapCheckText");
+
+      gapCheckBtn.addEventListener("click", () => {
+        const checks = [
+          document.getElementById("gapLandlordPolicy").checked,
+          document.getElementById("gapLossRent").checked,
+          document.getElementById("gapLiability").checked,
+          document.getElementById("gapWater").checked,
+          document.getElementById("gapOrdinance").checked
+        ];
+
+        const checkedCount = checks.filter(Boolean).length;
+        const missing = checks.length - checkedCount;
+
+        if (missing === 0) {
+          gapCheckHeadline.textContent = "You look more informed than most landlords.";
+          gapCheckText.textContent = "That said, even strong setups can still benefit from a second opinion to confirm there are no hidden blind spots.";
+        } else if (missing <= 2) {
+          gapCheckHeadline.textContent = `You may have ${missing} area${missing > 1 ? "s" : ""} worth double-checking.`;
+          gapCheckText.textContent = "That does not automatically mean you are underinsured, but it does suggest there may be pieces worth reviewing more closely.";
+        } else {
+          gapCheckHeadline.textContent = `You may have ${missing} potential gaps or unknowns.`;
+          gapCheckText.textContent = "If several of these boxes are uncertain, a quick coverage review may help you avoid surprises later.";
+        }
+
+        gapCheckResult.classList.add("active");
       });
 
       showStep(0);
