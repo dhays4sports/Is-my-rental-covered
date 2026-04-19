@@ -6,13 +6,14 @@
   <title>Is My Rental Covered? | Rental Coverage Risk Score</title>
   <meta
     name="description"
-    content="Get a quick rental property insurance risk score and request a coverage review from a licensed Farmers Insurance® agent."
+    content="Get a quick rental coverage risk score and request a coverage review from a licensed Farmers Insurance® agent."
   />
   <style>
     :root {
       --bg: #f6f8fb;
       --surface: #ffffff;
       --surface-soft: #f0f4f9;
+      --surface-alt: #eef4ff;
       --text: #17202a;
       --muted: #5f6c7b;
       --border: #dce3eb;
@@ -39,7 +40,8 @@
       line-height: 1.5;
     }
 
-    a { color: inherit; text-decoration: none; }
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
     .wrap {
       width: min(var(--max), calc(100% - 32px));
@@ -101,6 +103,7 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
+      text-decoration: none !important;
     }
 
     .btn-primary {
@@ -109,7 +112,16 @@
       box-shadow: 0 12px 24px rgba(15, 98, 254, 0.22);
     }
 
-    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.65;
+      cursor: wait;
+      transform: none;
+    }
 
     .btn-secondary {
       background: transparent;
@@ -122,11 +134,18 @@
       color: var(--muted);
     }
 
-    .hero-card {
+    .hero-card,
+    .section-card,
+    .quiz-card,
+    .policy-box,
+    .quiz-meta {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow);
+    }
+
+    .hero-card {
       padding: 24px;
     }
 
@@ -162,10 +181,6 @@
     }
 
     .section-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow);
       padding: 28px;
     }
 
@@ -181,25 +196,43 @@
       max-width: 700px;
     }
 
-    .risk-grid {
+    .risk-grid,
+    .trust-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 16px;
     }
 
-    .risk-item {
-      padding: 18px;
+    .risk-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .trust-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .risk-item,
+    .trust-card,
+    .agent-card,
+    .trust-inline {
       border: 1px solid var(--border);
       background: var(--surface-soft);
       border-radius: var(--radius-md);
     }
 
-    .risk-item h3 {
+    .risk-item {
+      padding: 18px;
+    }
+
+    .risk-item h3,
+    .trust-card h3,
+    .agent-card h3 {
       margin: 0 0 8px;
       font-size: 16px;
     }
 
-    .risk-item p {
+    .risk-item p,
+    .trust-card p,
+    .agent-card p {
       margin: 0;
       color: var(--muted);
       font-size: 15px;
@@ -216,8 +249,7 @@
       position: sticky;
       top: 18px;
       background: linear-gradient(180deg, #f7faff 0%, #eef4ff 100%);
-      border: 1px solid #cfe0ff;
-      border-radius: var(--radius-lg);
+      border-color: #cfe0ff;
       padding: 22px;
     }
 
@@ -248,10 +280,6 @@
     }
 
     .quiz-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow);
       padding: 28px;
     }
 
@@ -330,16 +358,58 @@
       margin-bottom: 18px;
     }
 
-    .result-panel h3 { margin: 0 0 10px; font-size: 1.7rem; }
-    .result-panel p { margin: 0 0 14px; color: var(--muted); }
-
-    .result-points {
-      margin: 0;
-      padding-left: 18px;
-      color: var(--text);
+    .result-panel h3 {
+      margin: 0 0 10px;
+      font-size: 1.7rem;
     }
 
-    .result-points li { margin-bottom: 8px; }
+    .result-panel p {
+      margin: 0 0 14px;
+      color: var(--muted);
+    }
+
+    .result-points,
+    .trust-bullets,
+    .personalized-points {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .result-points li,
+    .trust-bullets li,
+    .personalized-points li {
+      margin-bottom: 8px;
+    }
+
+    .personalized-box {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: white;
+    }
+
+    .personalized-box h4 {
+      margin: 0 0 10px;
+      font-size: 16px;
+    }
+
+    .lead-form-wrap {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+
+    .trust-inline {
+      padding: 16px;
+      margin: 16px 0 18px;
+      background: var(--surface-alt);
+    }
+
+    .trust-inline h4 {
+      margin: 0 0 8px;
+      font-size: 15px;
+    }
 
     form {
       display: grid;
@@ -399,26 +469,20 @@
       color: var(--muted);
     }
 
-    .trust-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-    }
-
     .trust-card {
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
       padding: 20px;
-      background: var(--surface-soft);
     }
 
-    .trust-card h3 {
-      margin: 0 0 8px;
-      font-size: 18px;
+    .agent-card {
+      padding: 20px;
+      margin-top: 18px;
     }
 
-    .trust-card p {
-      margin: 0;
+    .agent-meta {
+      display: grid;
+      gap: 4px;
+      margin-top: 10px;
+      font-size: 14px;
       color: var(--muted);
     }
 
@@ -444,12 +508,10 @@
       margin-inline: auto;
     }
 
+    .cta-band a { color: white; }
+
     .policy-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
       padding: 24px;
-      box-shadow: var(--shadow);
     }
 
     .policy-box h3 {
@@ -465,6 +527,10 @@
 
     .policy-box p + p {
       margin-top: 10px;
+    }
+
+    .footer-links {
+      margin: 10px 0 0;
     }
 
     .success-note,
@@ -534,16 +600,16 @@
         <div class="eyebrow">Rental Coverage Risk Score</div>
         <h1>How Exposed Is Your Rental Property?</h1>
         <p class="lead">
-          Get a quick risk score and see whether your current insurance may leave
-          your rental property exposed to lost rent, liability gaps, or out-of-pocket costs.
+          Get a quick rental coverage risk score and see whether your current policy may leave
+          you exposed to lost rent, liability gaps, or out-of-pocket costs.
         </p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#quiz">Check My Risk Score</a>
+          <a class="btn btn-primary" href="#quiz">Check My Rental Risk</a>
           <a class="btn btn-secondary" href="#why">What We Check</a>
         </div>
         <div class="micro">No spam. No obligation. Quick review.</div>
         <div class="micro" style="margin-top:8px;">
-          This site is operated by a licensed Farmers Insurance® agent offering coverage reviews and quotes.
+          Request a coverage review and quote from a licensed Farmers Insurance® agent.
         </div>
       </div>
 
@@ -608,6 +674,16 @@
             <div class="progress-fill" id="progressFill"></div>
           </div>
           <div class="step-label" id="stepLabel">Step 1 of 5</div>
+
+          <div class="agent-card">
+            <h3>Dylan Haysbert</h3>
+            <p>Licensed Farmers Insurance® Agent</p>
+            <div class="agent-meta">
+              <span>California</span>
+              <span>Your phone here</span>
+              <span>Your email here</span>
+            </div>
+          </div>
         </aside>
 
         <div class="quiz-card">
@@ -663,37 +739,61 @@
               <h3 id="resultTitle">Your result</h3>
               <p id="resultBody"></p>
               <ul id="resultPoints" class="result-points"></ul>
+
+              <div class="personalized-box">
+                <h4>Based on your answers, here’s what may deserve a closer look:</h4>
+                <ul id="personalizedPoints" class="personalized-points"></ul>
+              </div>
             </div>
-            <button class="btn btn-primary" id="reviewBtn" type="button">Get My Full Coverage Review</button>
           </div>
 
           <div class="lead-form-wrap" id="leadFormWrap">
-            <h3 style="margin:0 0 8px; font-size:1.6rem;">Get Your Full Coverage Review</h3>
+            <h3 style="margin:0 0 8px; font-size:1.6rem;">Request My Coverage Review</h3>
             <p class="section-sub" style="margin-bottom:16px; max-width:none;">
               Request a review from a licensed Farmers Insurance® agent to better understand whether your current rental property coverage may have gaps.
             </p>
 
-            <!-- Replace the action URL below with your real form endpoint -->
+            <div class="trust-inline">
+              <h4>Before you submit:</h4>
+              <ul class="trust-bullets fine">
+                <li>Quick review from a licensed Farmers Insurance® agent</li>
+                <li>No obligation to purchase</li>
+                <li>Your information is used only to follow up on your request</li>
+              </ul>
+            </div>
+
             <form id="leadForm" action="https://formspree.io/f/your-form-id" method="POST">
               <div class="field-grid">
                 <label>
                   Name
-                  <input type="text" name="name" placeholder="Your name" required />
+                  <input type="text" name="name" placeholder="Your name" autocomplete="name" required />
                 </label>
                 <label>
                   Email
-                  <input type="email" name="email" placeholder="you@example.com" required />
+                  <input type="email" name="email" placeholder="you@example.com" autocomplete="email" required />
                 </label>
               </div>
 
               <div class="field-grid">
                 <label>
                   Phone
-                  <input type="tel" name="phone" placeholder="(555) 555-5555" required />
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="(555) 555-5555"
+                    inputmode="tel"
+                    autocomplete="tel"
+                    required
+                  />
                 </label>
                 <label>
                   Property Address <span class="fine">(optional)</span>
-                  <input type="text" name="address" placeholder="123 Main St, San Jose, CA" />
+                  <input
+                    type="text"
+                    name="address"
+                    placeholder="123 Main St, San Jose, CA"
+                    autocomplete="street-address"
+                  />
                 </label>
               </div>
 
@@ -716,10 +816,11 @@
               <input type="hidden" name="riskScore" id="riskScoreInput" />
               <input type="hidden" name="riskLevel" id="riskLevelInput" />
               <input type="hidden" name="sourcePage" value="IsMyRentalCovered.com" />
+              <input type="hidden" name="answers" id="answersInput" />
 
-              <button class="btn btn-primary" type="submit">Get My Coverage Review</button>
+              <button class="btn btn-primary" type="submit" id="submitBtn">Request My Review</button>
               <div class="fine">No obligation. Coverage review provided by a licensed Farmers Insurance® agent.</div>
-              <div class="success-note" id="successNote">Thanks — your request has been sent.</div>
+              <div class="success-note" id="successNote">Thanks — your request has been sent. A licensed Farmers Insurance® agent will review your information and follow up shortly.</div>
               <div class="error-note" id="errorNote">Something went wrong. Please try again or replace the form handler with your live endpoint.</div>
             </form>
           </div>
@@ -757,7 +858,7 @@
         <p>
           A quick review now can save a lot of frustration later if a real claim ever puts your setup to the test.
         </p>
-        <a class="btn btn-primary" href="#quiz">Check My Risk Score</a>
+        <a class="btn btn-primary" href="#quiz">Check My Rental Risk</a>
       </div>
     </section>
 
@@ -778,6 +879,11 @@
     <p>
       This website is operated by a licensed Farmers Insurance® agent and is not the official website of Farmers Insurance®. Coverage availability, eligibility, and pricing may vary by state and individual circumstances.
     </p>
+    <p class="footer-links">
+      <a href="/privacy-policy.html">Privacy Policy</a> |
+      <a href="/terms.html">Terms of Use</a> |
+      <a href="/contact.html">Contact</a>
+    </p>
     <p>
       © 2026 | Licensed Farmers Insurance® Agent | All Rights Reserved
     </p>
@@ -789,22 +895,24 @@
       const totalSteps = questions.length;
       const progressFill = document.getElementById("progressFill");
       const stepLabel = document.getElementById("stepLabel");
+      const questionsWrap = document.getElementById("questionsWrap");
       const results = document.getElementById("results");
-      const reviewBtn = document.getElementById("reviewBtn");
       const leadFormWrap = document.getElementById("leadFormWrap");
       const scoreBadge = document.getElementById("scoreBadge");
       const resultTitle = document.getElementById("resultTitle");
       const resultBody = document.getElementById("resultBody");
       const resultPoints = document.getElementById("resultPoints");
+      const personalizedPoints = document.getElementById("personalizedPoints");
       const riskScoreInput = document.getElementById("riskScoreInput");
       const riskLevelInput = document.getElementById("riskLevelInput");
+      const answersInput = document.getElementById("answersInput");
       const leadForm = document.getElementById("leadForm");
       const successNote = document.getElementById("successNote");
       const errorNote = document.getElementById("errorNote");
+      const submitBtn = document.getElementById("submitBtn");
 
       let currentStep = 0;
-      let totalScore = 0;
-      const answers = [];
+      const answers = new Array(totalSteps).fill(null);
 
       function updateProgress() {
         const pct = ((currentStep + 1) / totalSteps) * 100;
@@ -820,9 +928,42 @@
         updateProgress();
       }
 
+      function calculateTotalScore() {
+        return answers.reduce((sum, answer) => sum + (answer ? answer.points : 0), 0);
+      }
+
+      function buildPersonalizedPoints() {
+        const items = [];
+
+        if (answers[0] && answers[0].value !== "Yes") {
+          items.push("It may be worth confirming whether your property is insured on a true landlord policy rather than a homeowners-style setup.");
+        }
+        if (answers[1] && answers[1].value !== "Yes") {
+          items.push("Loss of rental income protection deserves a closer look, especially if the property became unlivable after a covered claim.");
+        }
+        if (answers[2] && answers[2].value !== "$300k or more") {
+          items.push("Your liability protection may be weaker than ideal, or at least worth reviewing more closely.");
+        }
+        if (answers[3] && answers[3].value !== "Yes") {
+          items.push("Tenant-related damage or tenant-created issues may not be as clearly addressed as you would want.");
+        }
+        if (answers[4] && answers[4].value === "No") {
+          items.push("If lost rent would be hard to absorb out of pocket, income protection becomes even more important.");
+        }
+
+        if (items.length === 0) {
+          items.push("Your answers look stronger than average, but a second opinion can still confirm there are no hidden gaps.");
+        }
+
+        return items;
+      }
+
       function showResults() {
-        document.getElementById("questionsWrap").style.display = "none";
+        const totalScore = calculateTotalScore();
+
+        questionsWrap.style.display = "none";
         results.classList.add("active");
+        leadFormWrap.classList.add("active");
         progressFill.style.width = "100%";
         stepLabel.textContent = "Complete";
 
@@ -863,18 +1004,24 @@
         resultTitle.textContent = title;
         resultBody.textContent = body;
         resultPoints.innerHTML = bullets.map(item => `<li>${item}</li>`).join("");
+
+        const personalized = buildPersonalizedPoints();
+        personalizedPoints.innerHTML = personalized.map(item => `<li>${item}</li>`).join("");
+
         riskScoreInput.value = String(totalScore);
         riskLevelInput.value = level;
+        answersInput.value = JSON.stringify(answers.map(a => a ? a.value : null));
+
+        leadFormWrap.scrollIntoView({ behavior: "smooth", block: "start" });
       }
 
       questions.forEach((question, idx) => {
         question.querySelectorAll(".answer-btn").forEach(btn => {
           btn.addEventListener("click", () => {
-            const points = Number(btn.dataset.points || 0);
-            const value = btn.dataset.value || btn.textContent.trim();
-
-            answers[idx] = value;
-            totalScore += points;
+            answers[idx] = {
+              value: btn.dataset.value || btn.textContent.trim(),
+              points: Number(btn.dataset.points || 0)
+            };
 
             if (idx < totalSteps - 1) {
               showStep(idx + 1);
@@ -885,19 +1032,14 @@
         });
       });
 
-      reviewBtn.addEventListener("click", () => {
-        leadFormWrap.classList.add("active");
-        reviewBtn.style.display = "none";
-        leadFormWrap.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-
       leadForm.addEventListener("submit", async (e) => {
         e.preventDefault();
         successNote.style.display = "none";
         errorNote.style.display = "none";
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Submitting...";
 
         const formData = new FormData(leadForm);
-        formData.append("answers", JSON.stringify(answers));
 
         try {
           const response = await fetch(leadForm.action, {
@@ -916,6 +1058,9 @@
           }
         } catch (err) {
           errorNote.style.display = "block";
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Request My Review";
         }
       });
 
