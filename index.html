@@ -4,7 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Is My Rental Covered? | Rental Coverage Risk Score</title>
-  <meta name="description" content="Get a quick rental property insurance risk score and see whether your current coverage may leave you exposed." />
+  <meta
+    name="description"
+    content="Get a quick rental property insurance risk score and see whether your current coverage may leave you exposed."
+  />
   <style>
     :root {
       --bg: #f6f8fb;
@@ -27,6 +30,7 @@
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
       font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -291,8 +295,15 @@
       transform: translateY(-1px);
     }
 
-    .results, .lead-form-wrap { display: none; }
-    .results.active, .lead-form-wrap.active { display: block; }
+    .results,
+    .lead-form-wrap {
+      display: none;
+    }
+
+    .results.active,
+    .lead-form-wrap.active {
+      display: block;
+    }
 
     .score-badge {
       display: inline-flex;
@@ -416,14 +427,23 @@
       margin-inline: auto;
     }
 
-    .success-note {
+    .success-note,
+    .error-note {
       margin-top: 12px;
       padding: 14px 16px;
       border-radius: 12px;
-      background: rgba(31, 143, 78, 0.12);
-      color: #15572f;
       font-weight: 700;
       display: none;
+    }
+
+    .success-note {
+      background: rgba(31, 143, 78, 0.12);
+      color: #15572f;
+    }
+
+    .error-note {
+      background: rgba(217, 45, 32, 0.12);
+      color: #8f1d15;
     }
 
     footer {
@@ -454,7 +474,12 @@
     @media (max-width: 640px) {
       .wrap { width: min(100% - 20px, var(--max)); }
       .hero { padding-top: 34px; }
-      .section-card, .quiz-card, .hero-card, .quiz-meta { padding: 20px; }
+      .section-card,
+      .quiz-card,
+      .hero-card,
+      .quiz-meta {
+        padding: 20px;
+      }
       .hero-actions { flex-direction: column; }
       .btn { width: 100%; }
       .mini-score { grid-template-columns: 1fr; }
@@ -467,13 +492,17 @@
       <div>
         <div class="eyebrow">Rental Coverage Risk Score</div>
         <h1>How Exposed Is Your Rental Property?</h1>
-        <p class="lead">Get a quick risk score and see whether your current insurance may leave your rental property exposed to lost rent, liability gaps, or out-of-pocket costs.</p>
+        <p class="lead">
+          Get a quick risk score and see whether your current insurance may leave
+          your rental property exposed to lost rent, liability gaps, or out-of-pocket costs.
+        </p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#quiz">Check My Risk Score</a>
           <a class="btn btn-secondary" href="#why">What We Check</a>
         </div>
         <div class="micro">No spam. No obligation. Quick review.</div>
       </div>
+
       <div class="hero-card">
         <div class="mini-score">
           <div class="mini-block">
@@ -487,7 +516,10 @@
         </div>
         <div style="margin-top:16px; border-top:1px solid var(--border); padding-top:16px;">
           <strong style="display:block; margin-bottom:8px;">What this checks:</strong>
-          <div class="micro">Landlord vs. homeowners policy, loss of rent protection, liability strength, tenant-related exposure, and whether your current setup may need a second look.</div>
+          <div class="micro">
+            Landlord vs. homeowners policy, loss of rent protection, liability strength,
+            tenant-related exposure, and whether your current setup may need a second look.
+          </div>
         </div>
       </div>
     </div>
@@ -497,7 +529,11 @@
     <section id="why">
       <div class="wrap section-card">
         <h2 class="section-title">Here’s Where Most Landlords Get Caught Off Guard</h2>
-        <p class="section-sub">Most rental owners do not discover coverage gaps until a real claim forces the issue. These are the areas that tend to create the biggest surprises.</p>
+        <p class="section-sub">
+          Most rental owners do not discover coverage gaps until a real claim forces the issue.
+          These are the areas that tend to create the biggest surprises.
+        </p>
+
         <div class="risk-grid">
           <div class="risk-item">
             <h3>Loss of Rental Income</h3>
@@ -523,7 +559,7 @@
       <div class="wrap quiz-shell">
         <aside class="quiz-meta">
           <h3>Quick Coverage Check</h3>
-          <p>Answer a few simple questions. You will get a color-coded risk score and a personalized explanation.</p>
+          <p>Answer a few simple questions. You’ll get a color-coded risk score and a personalized explanation.</p>
           <div class="progress-bar" aria-hidden="true">
             <div class="progress-fill" id="progressFill"></div>
           </div>
@@ -589,8 +625,13 @@
 
           <div class="lead-form-wrap" id="leadFormWrap">
             <h3 style="margin:0 0 8px; font-size:1.6rem;">Get Your Full Coverage Review</h3>
-            <p class="section-sub" style="margin-bottom:16px; max-width:none;">I can take a quick look at your setup and show you where things may be strong, weak, or worth tightening up.</p>
-            <form id="leadForm">
+            <p class="section-sub" style="margin-bottom:16px; max-width:none;">
+              I can take a quick look at your setup and show you where things may be strong,
+              weak, or worth tightening up.
+            </p>
+
+            <!-- Replace the action URL below with your Formspree endpoint -->
+            <form id="leadForm" action="https://formspree.io/f/your-form-id" method="POST">
               <div class="field-grid">
                 <label>
                   Name
@@ -601,6 +642,7 @@
                   <input type="email" name="email" placeholder="you@example.com" required />
                 </label>
               </div>
+
               <div class="field-grid">
                 <label>
                   Phone
@@ -611,15 +653,24 @@
                   <input type="text" name="address" placeholder="123 Main St, San Jose, CA" />
                 </label>
               </div>
+
               <label>
                 Anything else you want reviewed? <span class="fine">(optional)</span>
-                <textarea name="notes" rows="4" placeholder="Ex: duplex, long-term tenants, multiple properties, not sure about water damage or loss of rent."></textarea>
+                <textarea
+                  name="notes"
+                  rows="4"
+                  placeholder="Ex: duplex, long-term tenants, multiple properties, not sure about water damage or loss of rent."
+                ></textarea>
               </label>
+
               <input type="hidden" name="riskScore" id="riskScoreInput" />
               <input type="hidden" name="riskLevel" id="riskLevelInput" />
+              <input type="hidden" name="sourcePage" value="IsMyRentalCovered.com" />
+
               <button class="btn btn-primary" type="submit">See My Full Review</button>
               <div class="fine">Quick turnaround. No obligation. Local advisor.</div>
-              <div class="success-note" id="successNote">Thanks — this demo form captured the submission locally. Connect it to Formspree, Web3Forms, Zapier, or your CRM to receive real submissions.</div>
+              <div class="success-note" id="successNote">Thanks — your request has been sent.</div>
+              <div class="error-note" id="errorNote">Something went wrong. Please try again or swap in your real form endpoint.</div>
             </form>
           </div>
         </div>
@@ -629,7 +680,10 @@
     <section>
       <div class="wrap section-card">
         <h2 class="section-title">Why Landlords Use This</h2>
-        <p class="section-sub">Even if you already have insurance, a second look can help you spot gaps before they become expensive.</p>
+        <p class="section-sub">
+          Even if you already have insurance, a second look can help you spot gaps before they become expensive.
+        </p>
+
         <div class="trust-grid">
           <div class="trust-card">
             <h3>Second Opinion</h3>
@@ -650,7 +704,9 @@
     <section>
       <div class="wrap cta-band">
         <h2>Even If You Already Have Insurance, It Doesn’t Hurt to Double-Check.</h2>
-        <p>A quick review now can save a lot of frustration later if a real claim ever puts your setup to the test.</p>
+        <p>
+          A quick review now can save a lot of frustration later if a real claim ever puts your setup to the test.
+        </p>
         <a class="btn btn-primary" href="#quiz">Check My Risk Score</a>
       </div>
     </section>
@@ -661,22 +717,23 @@
   </footer>
 
   <script>
-    (function () {
-      const questions = Array.from(document.querySelectorAll('.question'));
+    (() => {
+      const questions = Array.from(document.querySelectorAll(".question"));
       const totalSteps = questions.length;
-      const progressFill = document.getElementById('progressFill');
-      const stepLabel = document.getElementById('stepLabel');
-      const results = document.getElementById('results');
-      const reviewBtn = document.getElementById('reviewBtn');
-      const leadFormWrap = document.getElementById('leadFormWrap');
-      const scoreBadge = document.getElementById('scoreBadge');
-      const resultTitle = document.getElementById('resultTitle');
-      const resultBody = document.getElementById('resultBody');
-      const resultPoints = document.getElementById('resultPoints');
-      const riskScoreInput = document.getElementById('riskScoreInput');
-      const riskLevelInput = document.getElementById('riskLevelInput');
-      const leadForm = document.getElementById('leadForm');
-      const successNote = document.getElementById('successNote');
+      const progressFill = document.getElementById("progressFill");
+      const stepLabel = document.getElementById("stepLabel");
+      const results = document.getElementById("results");
+      const reviewBtn = document.getElementById("reviewBtn");
+      const leadFormWrap = document.getElementById("leadFormWrap");
+      const scoreBadge = document.getElementById("scoreBadge");
+      const resultTitle = document.getElementById("resultTitle");
+      const resultBody = document.getElementById("resultBody");
+      const resultPoints = document.getElementById("resultPoints");
+      const riskScoreInput = document.getElementById("riskScoreInput");
+      const riskLevelInput = document.getElementById("riskLevelInput");
+      const leadForm = document.getElementById("leadForm");
+      const successNote = document.getElementById("successNote");
+      const errorNote = document.getElementById("errorNote");
 
       let currentStep = 0;
       let totalScore = 0;
@@ -684,65 +741,71 @@
 
       function updateProgress() {
         const pct = ((currentStep + 1) / totalSteps) * 100;
-        progressFill.style.width = Math.min(pct, 100) + '%';
-        stepLabel.textContent = currentStep < totalSteps ? `Step ${currentStep + 1} of ${totalSteps}` : 'Complete';
+        progressFill.style.width = Math.min(pct, 100) + "%";
+        stepLabel.textContent = currentStep < totalSteps
+          ? `Step ${currentStep + 1} of ${totalSteps}`
+          : "Complete";
       }
 
       function showStep(index) {
-        questions.forEach((q, i) => q.classList.toggle('active', i === index));
+        questions.forEach((q, i) => q.classList.toggle("active", i === index));
         currentStep = index;
         updateProgress();
       }
 
       function showResults() {
-        document.getElementById('questionsWrap').style.display = 'none';
-        results.classList.add('active');
-        progressFill.style.width = '100%';
-        stepLabel.textContent = 'Complete';
+        document.getElementById("questionsWrap").style.display = "none";
+        results.classList.add("active");
+        progressFill.style.width = "100%";
+        stepLabel.textContent = "Complete";
 
-        let level = 'low';
-        let title = 'You’re Better Covered Than Most';
-        let body = 'Your answers suggest your setup may be stronger than average, but it is still worth double-checking details to make sure everything is aligned properly.';
+        let level = "low";
+        let title = "You’re Better Covered Than Most";
+        let body =
+          "Your answers suggest your setup may be stronger than average, but it is still worth double-checking details to make sure everything is aligned properly.";
         let bullets = [
-          'A quick review can confirm there are no hidden gaps.',
-          'It is still worth verifying loss of rent and water damage details.',
-          'Strong setups can still benefit from a second opinion.'
+          "A quick review can confirm there are no hidden gaps.",
+          "It is still worth verifying loss of rent and water damage details.",
+          "Strong setups can still benefit from a second opinion."
         ];
 
         if (totalScore >= 8) {
-          level = 'high';
-          title = 'You May Have Significant Coverage Gaps';
-          body = 'Your answers suggest there is a strong chance your current policy could leave you exposed in a real claim.';
+          level = "high";
+          title = "You May Have Significant Coverage Gaps";
+          body =
+            "Your answers suggest there is a strong chance your current policy could leave you exposed in a real claim.";
           bullets = [
-            'You may not have a true landlord policy in place.',
-            'You may be missing loss of rent protection or stronger liability limits.',
-            'Reviewing this now could help prevent major out-of-pocket costs later.'
+            "You may not have a true landlord policy in place.",
+            "You may be missing loss of rent protection or stronger liability limits.",
+            "Reviewing this now could help prevent major out-of-pocket costs later."
           ];
         } else if (totalScore >= 4) {
-          level = 'medium';
-          title = 'Your Coverage May Have Some Gaps';
-          body = 'You are on the right track, but there are likely areas that deserve a closer look depending on how the property is set up.';
+          level = "medium";
+          title = "Your Coverage May Have Some Gaps";
+          body =
+            "You are on the right track, but there are likely areas that deserve a closer look depending on how the property is set up.";
           bullets = [
-            'There may be room to tighten up liability or income protection.',
-            'A quick review can give you a clearer picture of where you stand.',
-            'Moderate-risk setups are often fixable without major changes.'
+            "There may be room to tighten up liability or income protection.",
+            "A quick review can give you a clearer picture of where you stand.",
+            "Moderate-risk setups are often fixable without major changes."
           ];
         }
 
-        scoreBadge.textContent = totalScore;
+        scoreBadge.textContent = String(totalScore);
         scoreBadge.className = `score-badge ${level}`;
         resultTitle.textContent = title;
         resultBody.textContent = body;
-        resultPoints.innerHTML = bullets.map(item => `<li>${item}</li>`).join('');
-        riskScoreInput.value = totalScore;
+        resultPoints.innerHTML = bullets.map(item => `<li>${item}</li>`).join("");
+        riskScoreInput.value = String(totalScore);
         riskLevelInput.value = level;
       }
 
       questions.forEach((question, idx) => {
-        question.querySelectorAll('.answer-btn').forEach(btn => {
-          btn.addEventListener('click', () => {
+        question.querySelectorAll(".answer-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
             const points = Number(btn.dataset.points || 0);
             const value = btn.dataset.value || btn.textContent.trim();
+
             answers[idx] = value;
             totalScore += points;
 
@@ -755,20 +818,38 @@
         });
       });
 
-      reviewBtn.addEventListener('click', () => {
-        leadFormWrap.classList.add('active');
-        reviewBtn.style.display = 'none';
-        leadFormWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      reviewBtn.addEventListener("click", () => {
+        leadFormWrap.classList.add("active");
+        reviewBtn.style.display = "none";
+        leadFormWrap.scrollIntoView({ behavior: "smooth", block: "start" });
       });
 
-      leadForm.addEventListener('submit', function (e) {
+      leadForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-        const formData = Object.fromEntries(new FormData(leadForm).entries());
-        formData.answers = answers;
-        formData.submittedAt = new Date().toISOString();
-        localStorage.setItem('ismyrentalcovered-demo-lead', JSON.stringify(formData));
-        successNote.style.display = 'block';
-        leadForm.reset();
+        successNote.style.display = "none";
+        errorNote.style.display = "none";
+
+        const formData = new FormData(leadForm);
+        formData.append("answers", JSON.stringify(answers));
+
+        try {
+          const response = await fetch(leadForm.action, {
+            method: leadForm.method,
+            body: formData,
+            headers: {
+              Accept: "application/json"
+            }
+          });
+
+          if (response.ok) {
+            successNote.style.display = "block";
+            leadForm.reset();
+          } else {
+            errorNote.style.display = "block";
+          }
+        } catch (err) {
+          errorNote.style.display = "block";
+        }
       });
 
       showStep(0);
