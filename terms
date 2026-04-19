@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Use | Is My Rental Covered?</title>
+  <meta name="description" content="Terms of Use for Is My Rental Covered?, operated by Dylan Haysbert, Producer with Dodge Agency Inc., representing Farmers Insurance®." />
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --surface: #ffffff;
+      --text: #17202a;
+      --muted: #5f6c7b;
+      --border: #dce3eb;
+      --primary: #0f62fe;
+      --shadow: 0 18px 40px rgba(16, 24, 40, 0.08);
+      --radius: 20px;
+      --max: 920px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      padding: 48px 0 64px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.05;
+    }
+    h2 {
+      margin-top: 32px;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+    .muted { color: var(--muted); }
+    .toplink {
+      display: inline-block;
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="toplink" href="/">← Back to Home</a>
+
+    <div class="card">
+      <h1>Terms of Use</h1>
+      <p class="muted">
+        Effective Date: [Month Day, Year]
+      </p>
+
+      <p>
+        These Terms of Use govern your use of IsMyRentalCovered.com (“Website”). This Website is operated
+        by Dylan Haysbert, Producer with Dodge Agency Inc., representing Farmers Insurance®.
+        By using this Website, you agree to these Terms.
+      </p>
+
+      <h2>Website Purpose</h2>
+      <p>
+        This Website is intended to provide educational information, a rental coverage risk quiz,
+        and a way to request insurance-related follow-up, coverage reviews, and quote discussions.
+        It is a lead generation and informational website and is not the official website of Farmers Insurance®.
+      </p>
+
+      <h2>No Guarantee of Coverage or Quote</h2>
+      <p>
+        Information presented on this Website is general in nature and does not constitute a binder,
+        policy, guarantee of coverage, or guarantee of eligibility, pricing, or availability.
+        Any insurance product, quote, or recommendation is subject to underwriting, carrier guidelines,
+        state availability, and individual circumstances.
+      </p>
+
+      <h2>No Professional or Legal Advice</h2>
+      <p>
+        The content on this Website is for general informational purposes only and should not be
+        relied upon as legal, tax, or financial advice. You should consult appropriate professionals
+        for advice specific to your circumstances.
+      </p>
+
+      <h2>User Responsibilities</h2>
+      <p>You agree that you will not:</p>
+      <ul>
+        <li>Use this Website for unlawful, fraudulent, or abusive purposes</li>
+        <li>Submit false, misleading, or incomplete information</li>
+        <li>Attempt to interfere with the operation or security of the Website</li>
+        <li>Use the Website in a way that could damage, disable, or impair its functionality</li>
+      </ul>
+
+      <h2>Consent to Communications</h2>
+      <p>
+        By submitting information through this Website, you may consent to communications from Dylan Haysbert,
+        Dodge Agency Inc., or other representatives of Dodge Agency Inc. regarding insurance products and
+        services, including calls, texts, and other communications consistent with the consent language provided
+        on the Website. Consent is not a condition of purchase.
+      </p>
+
+      <h2>Intellectual Property</h2>
+      <p>
+        Unless otherwise noted, the design, layout, text, graphics, and functionality of this Website are the
+        property of the Website operator or used with permission and may not be copied, reproduced, or distributed
+        without permission.
+      </p>
+
+      <h2>Third-Party Services</h2>
+      <p>
+        This Website may use or link to third-party tools and services, including hosting providers, form processors,
+        analytics tools, and external websites. We are not responsible for the content, privacy practices, or
+        availability of third-party services.
+      </p>
+
+      <h2>No Warranty</h2>
+      <p>
+        This Website is provided on an “as is” and “as available” basis without warranties of any kind, express
+        or implied, including warranties of accuracy, completeness, reliability, merchantability, fitness for a
+        particular purpose, or non-infringement.
+      </p>
+
+      <h2>Limitation of Liability</h2>
+      <p>
+        To the fullest extent permitted by law, Dylan Haysbert, Dodge Agency Inc., Daniel Dodge, and their affiliates,
+        representatives, and service providers shall not be liable for any direct, indirect, incidental, consequential,
+        special, or punitive damages arising from or related to your use of this Website or reliance on its content.
+      </p>
+
+      <h2>Indemnification</h2>
+      <p>
+        You agree to indemnify and hold harmless Dylan Haysbert, Dodge Agency Inc., Daniel Dodge, and their affiliates,
+        representatives, and service providers from claims, damages, liabilities, and expenses arising out of your
+        misuse of the Website or violation of these Terms.
+      </p>
+
+      <h2>Changes to These Terms</h2>
+      <p>
+        We may revise these Terms of Use at any time by posting an updated version on this page. Your continued use
+        of the Website after changes are posted constitutes your acceptance of the revised Terms.
+      </p>
+
+      <h2>Governing Law</h2>
+      <p>
+        These Terms shall be governed by the laws of the State of [California], without regard to conflict of law principles.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        Dylan Haysbert, Producer<br />
+        Dodge Agency Inc.<br />
+        [agency email]<br />
+        [agency phone]<br />
+        [agency address]
+      </p>
+    </div>
+  </div>
+</body>
+</html>
