@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact | Is My Rental Covered?</title>
+  <meta
+    name="description"
+    content="Contact Dylan Haysbert, Producer with Dodge Agency Inc., representing Farmers Insurance®."
+  />
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --surface: #ffffff;
+      --surface-soft: #f0f4f9;
+      --text: #17202a;
+      --muted: #5f6c7b;
+      --border: #dce3eb;
+      --primary: #0f62fe;
+      --primary-dark: #0b4ed0;
+      --shadow: 0 18px 40px rgba(16, 24, 40, 0.08);
+      --radius: 20px;
+      --max: 980px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      padding: 48px 0 64px;
+    }
+
+    .toplink {
+      display: inline-block;
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 30px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 1.2rem;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .contact-item {
+      padding: 14px 16px;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+
+    .contact-item strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    form {
+      display: grid;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    input, textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: white;
+      border-radius: 12px;
+      padding: 14px 15px;
+      font: inherit;
+      color: var(--text);
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(15, 98, 254, 0.12);
+    }
+
+    .check-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      line-height: 1.45;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .check-label input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      flex: 0 0 auto;
+    }
+
+    .btn {
+      border: 0;
+      cursor: pointer;
+      padding: 15px 22px;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 800;
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 12px 24px rgba(15, 98, 254, 0.22);
+      transition: 0.2s ease;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn:disabled {
+      opacity: 0.65;
+      cursor: wait;
+      transform: none;
+    }
+
+    .fine {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .success-note,
+    .error-note {
+      margin-top: 12px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      display: none;
+    }
+
+    .success-note {
+      background: rgba(31, 143, 78, 0.12);
+      color: #15572f;
+    }
+
+    .error-note {
+      background: rgba(217, 45, 32, 0.12);
+      color: #8f1d15;
+    }
+
+    footer {
+      margin-top: 22px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 860px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="toplink" href="/">← Back to Home</a>
+
+    <div class="grid">
+      <div class="card">
+        <h1>Contact</h1>
+        <p class="muted">
+          Reach out to Dylan Haysbert, Producer with Dodge Agency Inc., representing Farmers Insurance®.
+        </p>
+
+        <div class="contact-list">
+          <div class="contact-item">
+            <strong>Contact</strong>
+            Dylan Haysbert, Producer
+          </div>
+
+          <div class="contact-item">
+            <strong>Agency</strong>
+            Dodge Agency Inc.<br />
+            Daniel Dodge, Agency Owner
+          </div>
+
+          <div class="contact-item">
+            <strong>Phone</strong>
+            <a href="tel:+14088262465">(408) 826-2465</a>
+          </div>
+
+          <div class="contact-item">
+            <strong>Email</strong>
+            <a href="mailto:dylan@dodgeagencyinc.com">dylan@dodgeagencyinc.com</a>
+          </div>
+
+          <div class="contact-item">
+            <strong>Service Area</strong>
+            California | Washington | Oregon
+          </div>
+
+          <div class="contact-item">
+            <strong>Agency Address</strong>
+            [Insert agency address here]
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Send a Message</h2>
+        <p class="muted">
+          Have a question about rental property coverage, a quote, or a coverage review? Send a message below.
+        </p>
+
+        <form id="contactForm" action="https://formspree.io/f/your-form-id" method="POST">
+          <label>
+            Name
+            <input type="text" name="name" autocomplete="name" required />
+          </label>
+
+          <label>
+            Email
+            <input type="email" name="email" autocomplete="email" required />
+          </label>
+
+          <label>
+            Phone
+            <input type="tel" name="phone" inputmode="tel" autocomplete="tel" />
+          </label>
+
+          <label>
+            Message
+            <textarea
+              name="message"
+              rows="6"
+              placeholder="Tell me a little about what you need help with."
+              required
+            ></textarea>
+          </label>
+
+          <label class="check-label">
+            <input type="checkbox" name="tcpaConsent" required />
+            <span>
+              By submitting this form, you agree that Dylan Haysbert, Producer with Dodge Agency Inc., or another representative of Dodge Agency Inc. representing Farmers Insurance®, may contact you by call, text, or automated dialing system regarding insurance products and services at the number provided. Consent is not a condition of purchase.
+            </span>
+          </label>
+
+          <input type="hidden" name="sourcePage" value="contact.html" />
+
+          <button class="btn" type="submit" id="submitBtn">Send Message</button>
+
+          <div class="fine">
+            No obligation. Messages are handled through Dodge Agency Inc.
+          </div>
+
+          <div class="success-note" id="successNote">
+            Thanks — your message has been sent. Dylan Haysbert or another representative of Dodge Agency Inc. will follow up shortly.
+          </div>
+
+          <div class="error-note" id="errorNote">
+            Something went wrong. Please try again or replace the form handler with your live endpoint.
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <footer>
+      <p>
+        This website is operated by Dylan Haysbert, Producer with Dodge Agency Inc., representing Farmers Insurance®, and is not the official website of Farmers Insurance®.
+      </p>
+      <p>
+        <a href="/privacy-policy.html">Privacy Policy</a> |
+        <a href="/terms.html">Terms of Use</a>
+      </p>
+    </footer>
+  </div>
+
+  <script>
+    (() => {
+      const contactForm = document.getElementById("contactForm");
+      const submitBtn = document.getElementById("submitBtn");
+      const successNote = document.getElementById("successNote");
+      const errorNote = document.getElementById("errorNote");
+
+      contactForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        successNote.style.display = "none";
+        errorNote.style.display = "none";
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Sending...";
+
+        const formData = new FormData(contactForm);
+
+        try {
+          const response = await fetch(contactForm.action, {
+            method: contactForm.method,
+            body: formData,
+            headers: {
+              Accept: "application/json"
+            }
+          });
+
+          if (response.ok) {
+            successNote.style.display = "block";
+            contactForm.reset();
+          } else {
+            errorNote.style.display = "block";
+          }
+        } catch (err) {
+          errorNote.style.display = "block";
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Send Message";
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
