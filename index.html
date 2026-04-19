@@ -848,6 +848,7 @@
                 Anything else you want reviewed? <span class="fine">(optional)</span>
                 <textarea
                   name="notes"
+                  id="notesField"
                   rows="4"
                   placeholder="Ex: duplex, long-term tenants, multiple properties, not sure about water damage or loss of rent."
                 ></textarea>
@@ -864,6 +865,11 @@
               <input type="hidden" name="riskLevel" id="riskLevelInput" />
               <input type="hidden" name="sourcePage" value="IsMyRentalCovered.com" />
               <input type="hidden" name="answers" id="answersInput" />
+
+              <input type="hidden" name="toolLossRentSummary" id="toolLossRentSummary" />
+              <input type="hidden" name="toolPolicyTypeSummary" id="toolPolicyTypeSummary" />
+              <input type="hidden" name="toolGapChecklistSummary" id="toolGapChecklistSummary" />
+              <input type="hidden" name="toolCombinedSummary" id="toolCombinedSummary" />
 
               <button class="btn btn-primary" type="submit" id="submitBtn">Request My Review</button>
               <div class="fine">No obligation. Coverage review provided through Dodge Agency Inc., representing Farmers Insurance®.</div>
@@ -1094,12 +1100,46 @@
       const riskLevelInput = document.getElementById("riskLevelInput");
       const answersInput = document.getElementById("answersInput");
       const leadForm = document.getElementById("leadForm");
+      const notesField = document.getElementById("notesField");
       const successNote = document.getElementById("successNote");
       const errorNote = document.getElementById("errorNote");
       const submitBtn = document.getElementById("submitBtn");
 
+      const toolLossRentSummary = document.getElementById("toolLossRentSummary");
+      const toolPolicyTypeSummary = document.getElementById("toolPolicyTypeSummary");
+      const toolGapChecklistSummary = document.getElementById("toolGapChecklistSummary");
+      const toolCombinedSummary = document.getElementById("toolCombinedSummary");
+
       let currentStep = 0;
       const answers = new Array(totalSteps).fill(null);
+
+      const toolState = {
+        lossRent: "",
+        policyType: "",
+        gapChecklist: ""
+      };
+
+      function refreshToolSummaryFields() {
+        toolLossRentSummary.value = toolState.lossRent;
+        toolPolicyTypeSummary.value = toolState.policyType;
+        toolGapChecklistSummary.value = toolState.gapChecklist;
+
+        const combined = [
+          toolState.lossRent ? `Loss of Rent Tool: ${toolState.lossRent}` : "",
+          toolState.policyType ? `Policy Type Tool: ${toolState.policyType}` : "",
+          toolState.gapChecklist ? `Gap Checklist Tool: ${toolState.gapChecklist}` : ""
+        ].filter(Boolean).join(" | ");
+
+        toolCombinedSummary.value = combined;
+      }
+
+      function buildToolNotesAppendix() {
+        const parts = [];
+        if (toolState.lossRent) parts.push(`Loss of Rent Tool: ${toolState.lossRent}`);
+        if (toolState.policyType) parts.push(`Policy Type Tool: ${toolState.policyType}`);
+        if (toolState.gapChecklist) parts.push(`Gap Checklist Tool: ${toolState.gapChecklist}`);
+        return parts.join("\n");
+      }
 
       function updateProgress() {
         const pct = ((currentStep + 1) / totalSteps) * 100;
@@ -1226,6 +1266,17 @@
         submitBtn.disabled = true;
         submitBtn.textContent = "Submitting...";
 
+        refreshToolSummaryFields();
+
+        const originalNotes = notesField.value.trim();
+        const appendix = buildToolNotesAppendix();
+
+        if (appendix) {
+          notesField.value = originalNotes
+            ? `${originalNotes}\n\n--- Tool Outputs ---\n${appendix}`
+            : `--- Tool Outputs ---\n${appendix}`;
+        }
+
         const formData = new FormData(leadForm);
 
         try {
@@ -1240,12 +1291,17 @@
           if (response.ok) {
             successNote.style.display = "block";
             leadForm.reset();
+            toolState.lossRent = "";
+            toolState.policyType = "";
+            toolState.gapChecklist = "";
+            refreshToolSummaryFields();
           } else {
             errorNote.style.display = "block";
           }
         } catch (err) {
           errorNote.style.display = "block";
         } finally {
+          notesField.value = originalNotes;
           submitBtn.disabled = false;
           submitBtn.textContent = "Request My Review";
         }
@@ -1269,12 +1325,16 @@
         if (!monthly || !months) {
           rentCalcHeadline.textContent = "Enter your monthly rent and a time period.";
           rentCalcText.textContent = "This tool is just a simple estimate to help you visualize potential lost rental income exposure.";
+          toolState.lossRent = "Incomplete input.";
+          refreshToolSummaryFields();
           rentCalcResult.classList.add("active");
           return;
         }
 
         rentCalcHeadline.textContent = `Estimated exposure: $${exposure.toLocaleString()}`;
         rentCalcText.textContent = `That includes about $${(monthly * months).toLocaleString()} in possible lost rent over ${months} month(s), plus an estimated deductible of $${deductible.toLocaleString()}. This is only a general illustration and not a guarantee of claim outcome or coverage.`;
+        toolState.lossRent = `Estimated exposure $${exposure.toLocaleString()} based on monthly rent $${monthly.toLocaleString()}, ${months} month(s), deductible $${deductible.toLocaleString()}.`;
+        refreshToolSummaryFields();
         rentCalcResult.classList.add("active");
       });
 
@@ -1309,6 +1369,8 @@
 
         list.push("This tool is only educational and not a formal coverage determination.");
         policyCheckList.innerHTML = list.map(item => `<li>${item}</li>`).join("");
+        toolState.policyType = `${policyCheckHeadline.textContent} ${list.join(" ")}`;
+        refreshToolSummaryFields();
         policyCheckResult.classList.add("active");
       });
 
@@ -1341,9 +1403,12 @@
           gapCheckText.textContent = "If several of these boxes are uncertain, a quick coverage review may help you avoid surprises later.";
         }
 
+        toolState.gapChecklist = `${gapCheckHeadline.textContent} ${gapCheckText.textContent}`;
+        refreshToolSummaryFields();
         gapCheckResult.classList.add("active");
       });
 
+      refreshToolSummaryFields();
       showStep(0);
     })();
   </script>
