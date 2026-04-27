@@ -1,1416 +1,325 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Is My Rental Covered? | Rental Coverage Risk Score</title>
-  <meta
-    name="description"
-    content="Get a quick rental coverage risk score and request a coverage review from Dylan Haysbert, Producer with Dodge Agency Inc., representing Farmers Insurance®."
-  />
-  <style>
-    :root {
-      --bg: #f6f8fb;
-      --surface: #ffffff;
-      --surface-soft: #f0f4f9;
-      --surface-alt: #eef4ff;
-      --text: #17202a;
-      --muted: #5f6c7b;
-      --border: #dce3eb;
-      --primary: #0f62fe;
-      --primary-dark: #0b4ed0;
-      --danger: #d92d20;
-      --warning: #dc8b11;
-      --success: #1f8f4e;
-      --shadow: 0 18px 40px rgba(16, 24, 40, 0.08);
-      --radius-lg: 22px;
-      --radius-md: 16px;
-      --radius-sm: 12px;
-      --max: 1180px;
-    }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-
-    body {
-      margin: 0;
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
-      color: var(--text);
-      line-height: 1.5;
-    }
-
-    a { color: var(--primary); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    .wrap {
-      width: min(var(--max), calc(100% - 32px));
-      margin: 0 auto;
-    }
-
-    .hero {
-      padding: 64px 0 40px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 32px;
-      align-items: center;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(15, 98, 254, 0.10);
-      color: var(--primary);
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 18px;
-    }
-
-    h1 {
-      margin: 0 0 16px;
-      font-size: clamp(2.2rem, 4vw, 4.2rem);
-      line-height: 1.02;
-      letter-spacing: -0.04em;
-    }
-
-    .hero p.lead {
-      margin: 0 0 24px;
-      font-size: clamp(1.03rem, 1.5vw, 1.2rem);
-      color: var(--muted);
-      max-width: 650px;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-bottom: 14px;
-    }
-
-    .btn {
-      border: 0;
-      cursor: pointer;
-      padding: 15px 22px;
-      border-radius: 14px;
-      font-size: 16px;
-      font-weight: 800;
-      transition: 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      text-decoration: none !important;
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-      box-shadow: 0 12px 24px rgba(15, 98, 254, 0.22);
-    }
-
-    .btn-primary:hover {
-      background: var(--primary-dark);
-      transform: translateY(-1px);
-    }
-
-    .btn-primary:disabled {
-      opacity: 0.65;
-      cursor: wait;
-      transform: none;
-    }
-
-    .btn-secondary {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text);
-    }
-
-    .micro {
-      font-size: 14px;
-      color: var(--muted);
-    }
-
-    .hero-card,
-    .section-card,
-    .quiz-card,
-    .policy-box,
-    .quiz-meta,
-    .tool-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow);
-    }
-
-    .hero-card {
-      padding: 24px;
-    }
-
-    .mini-score {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    .mini-block {
-      background: var(--surface-soft);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 16px;
-    }
-
-    .mini-block strong {
-      display: block;
-      font-size: 14px;
-      color: var(--muted);
-      margin-bottom: 8px;
-      font-weight: 700;
-    }
-
-    .mini-block span {
-      font-size: 28px;
-      font-weight: 900;
-      line-height: 1;
-    }
-
-    section {
-      padding: 26px 0;
-    }
-
-    .section-card,
-    .tool-card {
-      padding: 28px;
-    }
-
-    .section-title {
-      margin: 0 0 10px;
-      font-size: clamp(1.5rem, 2vw, 2rem);
-      letter-spacing: -0.03em;
-    }
-
-    .section-sub {
-      margin: 0 0 24px;
-      color: var(--muted);
-      max-width: 700px;
-    }
-
-    .risk-grid,
-    .trust-grid,
-    .tool-grid {
-      display: grid;
-      gap: 16px;
-    }
-
-    .risk-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .trust-grid,
-    .tool-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .risk-item,
-    .trust-card,
-    .agent-card,
-    .trust-inline,
-    .tool-result {
-      border: 1px solid var(--border);
-      background: var(--surface-soft);
-      border-radius: var(--radius-md);
-    }
-
-    .risk-item {
-      padding: 18px;
-    }
-
-    .risk-item h3,
-    .trust-card h3,
-    .agent-card h3,
-    .tool-card h3 {
-      margin: 0 0 8px;
-      font-size: 16px;
-    }
-
-    .risk-item p,
-    .trust-card p,
-    .agent-card p,
-    .tool-card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    .quiz-shell {
-      display: grid;
-      grid-template-columns: 0.95fr 1.05fr;
-      gap: 20px;
-      align-items: start;
-    }
-
-    .quiz-meta {
-      position: sticky;
-      top: 18px;
-      background: linear-gradient(180deg, #f7faff 0%, #eef4ff 100%);
-      border-color: #cfe0ff;
-      padding: 22px;
-    }
-
-    .quiz-meta h3 { margin: 0 0 10px; font-size: 1.2rem; }
-    .quiz-meta p { margin: 0 0 16px; color: var(--muted); }
-
-    .progress-bar {
-      width: 100%;
-      height: 12px;
-      border-radius: 999px;
-      background: #dbe7ff;
-      overflow: hidden;
-      margin-bottom: 10px;
-    }
-
-    .progress-fill {
-      height: 100%;
-      width: 20%;
-      background: linear-gradient(90deg, var(--primary) 0%, #5e9bff 100%);
-      border-radius: 999px;
-      transition: width 0.25s ease;
-    }
-
-    .step-label {
-      font-size: 14px;
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    .quiz-card {
-      padding: 28px;
-    }
-
-    .question {
-      display: none;
-      animation: fadeIn 0.25s ease;
-    }
-
-    .question.active { display: block; }
-
-    .question h3 {
-      margin: 0 0 18px;
-      font-size: clamp(1.25rem, 1.8vw, 1.65rem);
-      letter-spacing: -0.03em;
-    }
-
-    .answers {
-      display: grid;
-      gap: 12px;
-    }
-
-    .answer-btn {
-      width: 100%;
-      text-align: left;
-      padding: 16px 18px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: white;
-      color: var(--text);
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
-
-    .answer-btn:hover,
-    .answer-btn:focus-visible {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 4px rgba(15, 98, 254, 0.12);
-      transform: translateY(-1px);
-    }
-
-    .results,
-    .lead-form-wrap {
-      display: none;
-    }
-
-    .results.active,
-    .lead-form-wrap.active {
-      display: block;
-    }
-
-    .score-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 92px;
-      height: 92px;
-      border-radius: 50%;
-      color: #fff;
-      font-size: 32px;
-      font-weight: 900;
-      margin-bottom: 16px;
-    }
-
-    .score-badge.low { background: var(--success); }
-    .score-badge.medium { background: var(--warning); }
-    .score-badge.high { background: var(--danger); }
-
-    .result-panel {
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      border: 1px solid var(--border);
-      background: var(--surface-soft);
-      margin-bottom: 18px;
-    }
-
-    .result-panel h3 {
-      margin: 0 0 10px;
-      font-size: 1.7rem;
-    }
-
-    .result-panel p {
-      margin: 0 0 14px;
-      color: var(--muted);
-    }
-
-    .result-points,
-    .trust-bullets,
-    .personalized-points,
-    .tool-list {
-      margin: 0;
-      padding-left: 18px;
-    }
-
-    .result-points li,
-    .trust-bullets li,
-    .personalized-points li,
-    .tool-list li {
-      margin-bottom: 8px;
-    }
-
-    .personalized-box {
-      margin-top: 18px;
-      padding: 18px;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border);
-      background: white;
-    }
-
-    .personalized-box h4 {
-      margin: 0 0 10px;
-      font-size: 16px;
-    }
-
-    .lead-form-wrap {
-      margin-top: 18px;
-      padding-top: 18px;
-      border-top: 1px solid var(--border);
-    }
-
-    .trust-inline {
-      padding: 16px;
-      margin: 16px 0 18px;
-      background: var(--surface-alt);
-    }
-
-    .trust-inline h4 {
-      margin: 0 0 8px;
-      font-size: 15px;
-    }
-
-    form,
-    .tool-form {
-      display: grid;
-      gap: 14px;
-      margin-top: 12px;
-    }
-
-    .field-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    label {
-      display: grid;
-      gap: 6px;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .check-label {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-size: 13px;
-      line-height: 1.45;
-      color: var(--muted);
-      font-weight: 500;
-    }
-
-    .check-label input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      margin-top: 2px;
-      flex: 0 0 auto;
-    }
-
-    input, textarea, select {
-      width: 100%;
-      border: 1px solid var(--border);
-      background: white;
-      border-radius: 12px;
-      padding: 14px 15px;
-      font: inherit;
-      color: var(--text);
-    }
-
-    input:focus, textarea:focus, select:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 4px rgba(15, 98, 254, 0.12);
-    }
-
-    .fine {
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .trust-card {
-      padding: 20px;
-    }
-
-    .agent-card {
-      padding: 20px;
-      margin-top: 18px;
-    }
-
-    .agent-meta {
-      display: grid;
-      gap: 4px;
-      margin-top: 10px;
-      font-size: 14px;
-      color: var(--muted);
-    }
-
-    .tool-card h3 {
-      font-size: 18px;
-      margin-bottom: 10px;
-    }
-
-    .tool-card .tool-copy {
-      margin-bottom: 14px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .tool-result {
-      margin-top: 14px;
-      padding: 16px;
-      display: none;
-    }
-
-    .tool-result.active {
-      display: block;
-    }
-
-    .tool-result strong {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 15px;
-    }
-
-    .tool-cta {
-      margin-top: 12px;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .cta-band {
-      text-align: center;
-      padding: 38px 24px;
-      border-radius: var(--radius-lg);
-      background: linear-gradient(180deg, #0f1728 0%, #12203d 100%);
-      color: white;
-      box-shadow: var(--shadow);
-    }
-
-    .cta-band h2 {
-      margin: 0 0 12px;
-      font-size: clamp(1.8rem, 2.5vw, 2.7rem);
-      letter-spacing: -0.03em;
-    }
-
-    .cta-band p {
-      margin: 0 0 18px;
-      color: rgba(255,255,255,0.82);
-      max-width: 650px;
-      margin-inline: auto;
-    }
-
-    .cta-band a { color: white; }
-
-    .policy-box {
-      padding: 24px;
-    }
-
-    .policy-box h3 {
-      margin: 0 0 10px;
-      font-size: 1.2rem;
-    }
-
-    .policy-box p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .policy-box p + p {
-      margin-top: 10px;
-    }
-
-    .footer-links {
-      margin: 10px 0 0;
-    }
-
-    .success-note,
-    .error-note {
-      margin-top: 12px;
-      padding: 14px 16px;
-      border-radius: 12px;
-      font-weight: 700;
-      display: none;
-    }
-
-    .success-note {
-      background: rgba(31, 143, 78, 0.12);
-      color: #15572f;
-    }
-
-    .error-note {
-      background: rgba(217, 45, 32, 0.12);
-      color: #8f1d15;
-    }
-
-    footer {
-      padding: 30px 0 50px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @media (max-width: 940px) {
-      .hero-grid,
-      .quiz-shell,
-      .risk-grid,
-      .trust-grid,
-      .field-grid,
-      .tool-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .quiz-meta { position: static; }
-      .mini-score { grid-template-columns: 1fr 1fr; }
-    }
-
-    @media (max-width: 640px) {
-      .wrap { width: min(100% - 20px, var(--max)); }
-      .hero { padding-top: 34px; }
-      .section-card,
-      .quiz-card,
-      .hero-card,
-      .quiz-meta,
-      .policy-box,
-      .tool-card {
-        padding: 20px;
-      }
-      .hero-actions { flex-direction: column; }
-      .btn { width: 100%; }
-      .mini-score { grid-template-columns: 1fr; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Is Your Rental Actually Covered?</title>
+
+<style>
+:root {
+  --blue:#003a8f;
+  --red:#e31837;
+  --text:#1f2937;
+  --muted:#64748b;
+  --bg:#f3f6fb;
+  --surface:#ffffff;
+  --border:#d8e0ec;
+}
+
+body{
+  margin:0;
+  font-family:Inter,system-ui,sans-serif;
+  background:linear-gradient(180deg,#fff 0%,var(--bg) 100%);
+  color:var(--text);
+}
+
+.wrap{
+  max-width:520px;
+  margin:auto;
+  padding:18px;
+}
+
+.hero{
+  text-align:center;
+  margin-bottom:22px;
+}
+
+.badge{
+  background:rgba(0,58,143,.08);
+  color:var(--blue);
+  font-size:12px;
+  font-weight:800;
+  padding:6px 10px;
+  border-radius:999px;
+  display:inline-block;
+  margin-bottom:12px;
+}
+
+h1{
+  font-size:30px;
+  line-height:1.05;
+  margin:0 0 10px;
+}
+
+.lead{
+  color:var(--muted);
+  font-size:15px;
+}
+
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:20px;
+  box-shadow:0 12px 30px rgba(0,0,0,.06);
+}
+
+.progress{
+  height:6px;
+  background:#e5e7eb;
+  border-radius:999px;
+  overflow:hidden;
+  margin-bottom:14px;
+}
+
+.progress-fill{
+  height:100%;
+  background:var(--blue);
+  width:0%;
+}
+
+.question{display:none;}
+.question.active{display:block;}
+
+.answers{
+  display:grid;
+  gap:10px;
+  margin-top:14px;
+}
+
+.answer{
+  padding:14px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  cursor:pointer;
+  font-weight:700;
+}
+
+.answer:hover{
+  border-color:var(--blue);
+}
+
+.result, .lead-form{display:none;}
+
+.score{
+  font-size:38px;
+  font-weight:900;
+  margin-bottom:6px;
+}
+
+.risk{
+  font-weight:800;
+  margin-bottom:12px;
+}
+
+.bullets{
+  text-align:left;
+  font-size:14px;
+  color:var(--muted);
+  margin:12px 0;
+}
+
+.bullets li{
+  margin-bottom:6px;
+}
+
+.btn{
+  width:100%;
+  padding:14px;
+  border-radius:14px;
+  font-weight:900;
+  border:none;
+  cursor:pointer;
+}
+
+.primary{
+  background:var(--red);
+  color:white;
+}
+
+.secondary{
+  margin-top:10px;
+  background:white;
+  border:1px solid var(--border);
+}
+
+input{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  margin-bottom:10px;
+}
+
+.footer{
+  text-align:center;
+  font-size:11px;
+  color:var(--muted);
+  margin-top:24px;
+}
+</style>
 </head>
+
 <body>
-  <header class="hero">
-    <div class="wrap hero-grid">
-      <div>
-        <div class="eyebrow">Rental Coverage Risk Score</div>
-        <h1>How Exposed Is Your Rental Property?</h1>
-        <p class="lead">
-          Get a quick rental coverage risk score and see whether your current policy may leave
-          you exposed to lost rent, liability gaps, or out-of-pocket costs.
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#quiz">Check My Rental Risk</a>
-          <a class="btn btn-secondary" href="#why">What We Check</a>
-        </div>
-        <div class="micro">No spam. No obligation. Quick review.</div>
-        <div class="micro" style="margin-top:8px;">
-          This site is operated by Dylan Haysbert, Producer with Dodge Agency Inc., representing Farmers Insurance®, for insurance lead generation, coverage reviews, and quote requests.
-        </div>
-      </div>
-
-      <div class="hero-card">
-        <div class="mini-score">
-          <div class="mini-block">
-            <strong>Fast Check</strong>
-            <span>5 Questions</span>
-          </div>
-          <div class="mini-block">
-            <strong>Time</strong>
-            <span>~60 Sec</span>
-          </div>
-        </div>
-        <div style="margin-top:16px; border-top:1px solid var(--border); padding-top:16px;">
-          <strong style="display:block; margin-bottom:8px;">What this checks:</strong>
-          <div class="micro">
-            Landlord vs. homeowners policy, loss of rent protection, liability strength,
-            tenant-related exposure, and whether your current setup may need a second look.
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <section id="why">
-      <div class="wrap section-card">
-        <h2 class="section-title">Here’s Where Most Landlords Get Caught Off Guard</h2>
-        <p class="section-sub">
-          Most rental owners do not discover coverage gaps until a real claim forces the issue.
-          These are the areas that tend to create the biggest surprises.
-        </p>
-
-        <div class="risk-grid">
-          <div class="risk-item">
-            <h3>Loss of Rental Income</h3>
-            <p>Your policy may not fully protect lost rent if the property becomes unlivable after a covered loss.</p>
-          </div>
-          <div class="risk-item">
-            <h3>Water Damage Limits</h3>
-            <p>Water damage is often capped lower than landlords expect, especially on weaker policies.</p>
-          </div>
-          <div class="risk-item">
-            <h3>Liability Exposure</h3>
-            <p>Low liability limits can become expensive fast if a tenant or guest is injured on the property.</p>
-          </div>
-          <div class="risk-item">
-            <h3>Wrong Policy Type</h3>
-            <p>Some owners still have a homeowners-style setup instead of a true landlord policy.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="quiz">
-      <div class="wrap quiz-shell">
-        <aside class="quiz-meta">
-          <h3>Quick Coverage Check</h3>
-          <p>Answer a few simple questions. You’ll get a color-coded risk score and a personalized explanation.</p>
-          <div class="progress-bar" aria-hidden="true">
-            <div class="progress-fill" id="progressFill"></div>
-          </div>
-          <div class="step-label" id="stepLabel">Step 1 of 5</div>
-
-          <div class="agent-card">
-            <h3>Dylan Haysbert</h3>
-            <p>Producer | Dodge Agency Inc.</p>
-            <div class="agent-meta">
-              <span>Representing Farmers Insurance®</span>
-              <span>Daniel Dodge, Agency Owner</span>
-              <span>California | Washington | Oregon</span>
-              <span>(408) 826-2465</span>
-              <span>dylan@dodgeagencyinc.com</span>
-            </div>
-          </div>
-        </aside>
-
-        <div class="quiz-card">
-          <div id="questionsWrap">
-            <div class="question active" data-step="1">
-              <h3>Is your policy written as a landlord policy?</h3>
-              <div class="answers">
-                <button class="answer-btn" data-points="0" data-value="Yes">Yes</button>
-                <button class="answer-btn" data-points="3" data-value="No">No</button>
-                <button class="answer-btn" data-points="2" data-value="Not sure">Not sure</button>
-              </div>
-            </div>
-
-            <div class="question" data-step="2">
-              <h3>Do you know if your policy covers loss of rental income?</h3>
-              <div class="answers">
-                <button class="answer-btn" data-points="0" data-value="Yes">Yes</button>
-                <button class="answer-btn" data-points="3" data-value="No">No</button>
-                <button class="answer-btn" data-points="2" data-value="Not sure">Not sure</button>
-              </div>
-            </div>
-
-            <div class="question" data-step="3">
-              <h3>Do you know your liability limit?</h3>
-              <div class="answers">
-                <button class="answer-btn" data-points="0" data-value="$300k or more">$300k or more</button>
-                <button class="answer-btn" data-points="2" data-value="Below $300k">Below $300k</button>
-                <button class="answer-btn" data-points="2" data-value="Not sure">Not sure</button>
-              </div>
-            </div>
-
-            <div class="question" data-step="4">
-              <h3>Does your policy cover tenant-caused damage?</h3>
-              <div class="answers">
-                <button class="answer-btn" data-points="0" data-value="Yes">Yes</button>
-                <button class="answer-btn" data-points="3" data-value="No">No</button>
-                <button class="answer-btn" data-points="2" data-value="Not sure">Not sure</button>
-              </div>
-            </div>
-
-            <div class="question" data-step="5">
-              <h3>Would you be financially comfortable covering 6–12 months of lost rent out of pocket?</h3>
-              <div class="answers">
-                <button class="answer-btn" data-points="0" data-value="Yes">Yes</button>
-                <button class="answer-btn" data-points="3" data-value="No">No</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="results" id="results">
-            <div id="resultPanel" class="result-panel">
-              <div id="scoreBadge" class="score-badge">0</div>
-              <h3 id="resultTitle">Your result</h3>
-              <p id="resultBody"></p>
-              <ul id="resultPoints" class="result-points"></ul>
-
-              <div class="personalized-box">
-                <h4>Based on your answers, here’s what may deserve a closer look:</h4>
-                <ul id="personalizedPoints" class="personalized-points"></ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="lead-form-wrap" id="leadFormWrap">
-            <h3 style="margin:0 0 8px; font-size:1.6rem;">Request My Coverage Review</h3>
-            <p class="section-sub" style="margin-bottom:16px; max-width:none;">
-              Request a review from Dylan Haysbert, Producer with Dodge Agency Inc., representing Farmers Insurance®, to better understand whether your current rental property coverage may have gaps.
-            </p>
-
-            <div class="trust-inline">
-              <h4>Before you submit:</h4>
-              <ul class="trust-bullets fine">
-                <li>Quick review from Dylan Haysbert, Producer with Dodge Agency Inc.</li>
-                <li>No obligation to purchase</li>
-                <li>Your information is used only to follow up on your request</li>
-              </ul>
-            </div>
-
-            <form id="leadForm" action="https://formspree.io/f/xjgjokjq" method="POST">
-              <div class="field-grid">
-                <label>
-                  Name
-                  <input type="text" name="name" placeholder="Your name" autocomplete="name" required />
-                </label>
-                <label>
-                  Email
-                  <input type="email" name="email" placeholder="you@example.com" autocomplete="email" required />
-                </label>
-              </div>
-
-              <div class="field-grid">
-                <label>
-                  Phone
-                  <input
-                    type="tel"
-                    name="phone"
-                    placeholder="(555) 555-5555"
-                    inputmode="tel"
-                    autocomplete="tel"
-                    required
-                  />
-                </label>
-                <label>
-                  Property Address <span class="fine">(optional)</span>
-                  <input
-                    type="text"
-                    name="address"
-                    placeholder="123 Main St, San Jose, CA"
-                    autocomplete="street-address"
-                  />
-                </label>
-              </div>
-
-              <label>
-                Anything else you want reviewed? <span class="fine">(optional)</span>
-                <textarea
-                  name="notes"
-                  id="notesField"
-                  rows="4"
-                  placeholder="Ex: duplex, long-term tenants, multiple properties, not sure about water damage or loss of rent."
-                ></textarea>
-              </label>
-
-              <label class="check-label">
-                <input type="checkbox" name="tcpaConsent" required />
-                <span>
-                  By submitting this form, you agree that Dylan Haysbert, Producer with Dodge Agency Inc., or another representative of Dodge Agency Inc. representing Farmers Insurance®, may contact you by call, text, or automated dialing system regarding insurance products and services at the number provided. Consent is not a condition of purchase.
-                </span>
-              </label>
-
-              <input type="hidden" name="riskScore" id="riskScoreInput" />
-              <input type="hidden" name="riskLevel" id="riskLevelInput" />
-              <input type="hidden" name="sourcePage" value="IsMyRentalCovered.com" />
-              <input type="hidden" name="answers" id="answersInput" />
-
-              <input type="hidden" name="toolLossRentSummary" id="toolLossRentSummary" />
-              <input type="hidden" name="toolPolicyTypeSummary" id="toolPolicyTypeSummary" />
-              <input type="hidden" name="toolGapChecklistSummary" id="toolGapChecklistSummary" />
-              <input type="hidden" name="toolCombinedSummary" id="toolCombinedSummary" />
-
-              <button class="btn btn-primary" type="submit" id="submitBtn">Request My Review</button>
-              <div class="fine">No obligation. Coverage review provided through Dodge Agency Inc., representing Farmers Insurance®.</div>
-              <div class="success-note" id="successNote">Thanks — your request has been sent. Dylan Haysbert or another representative of Dodge Agency Inc. will review your information and follow up shortly.</div>
-              <div class="error-note" id="errorNote">Something went wrong. Please try again or replace the form handler with your live endpoint.</div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="tools">
-      <div class="wrap section-card">
-        <h2 class="section-title">Quick Tools for Landlords</h2>
-        <p class="section-sub">
-          These quick tools are meant to help you pressure-test your setup. They are general educational tools only and not a guarantee of coverage, pricing, or claim outcome.
-        </p>
-
-        <div class="tool-grid">
-          <div class="tool-card">
-            <h3>Loss of Rent Exposure Calculator</h3>
-            <p class="tool-copy">
-              Estimate how much rental income exposure you could be looking at if your property were out of service after a covered loss.
-            </p>
-
-            <div class="tool-form">
-              <label>
-                Monthly Rent
-                <input type="number" id="rentMonthly" placeholder="2500" min="0" step="1" />
-              </label>
-
-              <label>
-                Months Out of Service
-                <select id="rentMonths">
-                  <option value="3">3 months</option>
-                  <option value="6" selected>6 months</option>
-                  <option value="9">9 months</option>
-                  <option value="12">12 months</option>
-                </select>
-              </label>
-
-              <label>
-                Estimated Deductible (optional)
-                <input type="number" id="rentDeductible" placeholder="2500" min="0" step="1" />
-              </label>
-
-              <button class="btn btn-secondary" type="button" id="rentCalcBtn">Calculate Exposure</button>
-            </div>
-
-            <div class="tool-result" id="rentCalcResult">
-              <strong id="rentCalcHeadline"></strong>
-              <p id="rentCalcText" class="fine" style="margin:0;"></p>
-              <div class="tool-cta">
-                <a href="#quiz">Want a second opinion? Take the coverage check above.</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="tool-card">
-            <h3>Policy Type Checker</h3>
-            <p class="tool-copy">
-              A quick way to pressure-test whether your situation sounds more like a true landlord setup or something that may deserve a closer look.
-            </p>
-
-            <div class="tool-form">
-              <label>
-                Do you live in the property?
-                <select id="policyLiveThere">
-                  <option value="no" selected>No</option>
-                  <option value="yes">Yes</option>
-                  <option value="part">Part of the time</option>
-                </select>
-              </label>
-
-              <label>
-                Is the property rented to tenants?
-                <select id="policyRented">
-                  <option value="yes" selected>Yes</option>
-                  <option value="no">No</option>
-                  <option value="vacant">Currently vacant between tenants</option>
-                </select>
-              </label>
-
-              <label>
-                Is this property primarily used to generate rental income?
-                <select id="policyIncome">
-                  <option value="yes" selected>Yes</option>
-                  <option value="no">No</option>
-                  <option value="notsure">Not sure</option>
-                </select>
-              </label>
-
-              <button class="btn btn-secondary" type="button" id="policyCheckBtn">Check My Setup</button>
-            </div>
-
-            <div class="tool-result" id="policyCheckResult">
-              <strong id="policyCheckHeadline"></strong>
-              <ul class="tool-list" id="policyCheckList"></ul>
-              <div class="tool-cta">
-                <a href="#quiz">Want a closer look? Take the coverage check above.</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="tool-card">
-            <h3>Coverage Gap Checklist</h3>
-            <p class="tool-copy">
-              Check off what you know you already have. This is a fast way to spot where there may still be blind spots.
-            </p>
-
-            <div class="tool-form">
-              <label class="check-label">
-                <input type="checkbox" id="gapLandlordPolicy" />
-                <span>I know I have a true landlord policy</span>
-              </label>
-
-              <label class="check-label">
-                <input type="checkbox" id="gapLossRent" />
-                <span>I know I have loss of rental income coverage</span>
-              </label>
-
-              <label class="check-label">
-                <input type="checkbox" id="gapLiability" />
-                <span>I know my liability limit is at least $500,000</span>
-              </label>
-
-              <label class="check-label">
-                <input type="checkbox" id="gapWater" />
-                <span>I know how water damage is limited on my policy</span>
-              </label>
-
-              <label class="check-label">
-                <input type="checkbox" id="gapOrdinance" />
-                <span>I know I have ordinance/code upgrade protection</span>
-              </label>
-
-              <button class="btn btn-secondary" type="button" id="gapCheckBtn">Check for Gaps</button>
-            </div>
-
-            <div class="tool-result" id="gapCheckResult">
-              <strong id="gapCheckHeadline"></strong>
-              <p id="gapCheckText" class="fine" style="margin:0;"></p>
-              <div class="tool-cta">
-                <a href="#quiz">Want help reviewing those gaps? Take the coverage check above.</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="wrap section-card">
-        <h2 class="section-title">Why Landlords Use This</h2>
-        <p class="section-sub">
-          Even if you already have insurance, a second look can help you spot gaps before they become expensive.
-        </p>
-
-        <div class="trust-grid">
-          <div class="trust-card">
-            <h3>Second Opinion</h3>
-            <p>Even if you already have coverage, it helps to verify that it is set up correctly for a rental property.</p>
-          </div>
-          <div class="trust-card">
-            <h3>No Pressure</h3>
-            <p>This page is designed to help you request a coverage review, not to make misleading claims or create confusion.</p>
-          </div>
-          <div class="trust-card">
-            <h3>Agency Transparency</h3>
-            <p>This lead generation page is operated by Dylan Haysbert, Producer with Dodge Agency Inc., representing Farmers Insurance®.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="wrap cta-band">
-        <h2>Even If You Already Have Insurance, It Doesn’t Hurt to Double-Check.</h2>
-        <p>
-          A quick review now can save a lot of frustration later if a real claim ever puts your setup to the test.
-        </p>
-        <a class="btn btn-primary" href="#quiz">Check My Rental Risk</a>
-      </div>
-    </section>
-
-    <section>
-      <div class="wrap policy-box">
-        <h3>Privacy & Data Use</h3>
-        <p>
-          We collect your information for the purpose of providing insurance quotes, coverage reviews, and related follow-up from Dylan Haysbert, Producer with Dodge Agency Inc., representing Farmers Insurance®. Your information should only be used in accordance with Dodge Agency Inc.’s privacy, recordkeeping, and consent requirements.
-        </p>
-        <p>
-          Before going live, this website should be submitted through Farmers’ internal marketing/compliance review process and linked to your final approved privacy policy.
-        </p>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <p>
-      This website is operated by Dylan Haysbert, Producer with Dodge Agency Inc., representing Farmers Insurance®, and is not the official website of Farmers Insurance®. Daniel Dodge is the agency owner. Coverage availability, eligibility, and pricing may vary by state and individual circumstances.
-    </p>
-    <p class="footer-links">
-      <a href="/privacy-policy.html">Privacy Policy</a> |
-      <a href="/terms.html">Terms of Use</a> |
-      <a href="/contact.html">Contact</a>
-    </p>
-    <p>
-      © 2026 | Dylan Haysbert, Producer | Dodge Agency Inc. | All Rights Reserved
-    </p>
-  </footer>
-
-  <script>
-    (() => {
-      const questions = Array.from(document.querySelectorAll(".question"));
-      const totalSteps = questions.length;
-      const progressFill = document.getElementById("progressFill");
-      const stepLabel = document.getElementById("stepLabel");
-      const questionsWrap = document.getElementById("questionsWrap");
-      const results = document.getElementById("results");
-      const leadFormWrap = document.getElementById("leadFormWrap");
-      const scoreBadge = document.getElementById("scoreBadge");
-      const resultTitle = document.getElementById("resultTitle");
-      const resultBody = document.getElementById("resultBody");
-      const resultPoints = document.getElementById("resultPoints");
-      const personalizedPoints = document.getElementById("personalizedPoints");
-      const riskScoreInput = document.getElementById("riskScoreInput");
-      const riskLevelInput = document.getElementById("riskLevelInput");
-      const answersInput = document.getElementById("answersInput");
-      const leadForm = document.getElementById("leadForm");
-      const notesField = document.getElementById("notesField");
-      const successNote = document.getElementById("successNote");
-      const errorNote = document.getElementById("errorNote");
-      const submitBtn = document.getElementById("submitBtn");
-
-      const toolLossRentSummary = document.getElementById("toolLossRentSummary");
-      const toolPolicyTypeSummary = document.getElementById("toolPolicyTypeSummary");
-      const toolGapChecklistSummary = document.getElementById("toolGapChecklistSummary");
-      const toolCombinedSummary = document.getElementById("toolCombinedSummary");
-
-      let currentStep = 0;
-      const answers = new Array(totalSteps).fill(null);
-
-      const toolState = {
-        lossRent: "",
-        policyType: "",
-        gapChecklist: ""
-      };
-
-      function refreshToolSummaryFields() {
-        toolLossRentSummary.value = toolState.lossRent;
-        toolPolicyTypeSummary.value = toolState.policyType;
-        toolGapChecklistSummary.value = toolState.gapChecklist;
-
-        const combined = [
-          toolState.lossRent ? `Loss of Rent Tool: ${toolState.lossRent}` : "",
-          toolState.policyType ? `Policy Type Tool: ${toolState.policyType}` : "",
-          toolState.gapChecklist ? `Gap Checklist Tool: ${toolState.gapChecklist}` : ""
-        ].filter(Boolean).join(" | ");
-
-        toolCombinedSummary.value = combined;
-      }
-
-      function buildToolNotesAppendix() {
-        const parts = [];
-        if (toolState.lossRent) parts.push(`Loss of Rent Tool: ${toolState.lossRent}`);
-        if (toolState.policyType) parts.push(`Policy Type Tool: ${toolState.policyType}`);
-        if (toolState.gapChecklist) parts.push(`Gap Checklist Tool: ${toolState.gapChecklist}`);
-        return parts.join("\n");
-      }
-
-      function updateProgress() {
-        const pct = ((currentStep + 1) / totalSteps) * 100;
-        progressFill.style.width = Math.min(pct, 100) + "%";
-        stepLabel.textContent = currentStep < totalSteps
-          ? `Step ${currentStep + 1} of ${totalSteps}`
-          : "Complete";
-      }
-
-      function showStep(index) {
-        questions.forEach((q, i) => q.classList.toggle("active", i === index));
-        currentStep = index;
-        updateProgress();
-      }
-
-      function calculateTotalScore() {
-        return answers.reduce((sum, answer) => sum + (answer ? answer.points : 0), 0);
-      }
-
-      function buildPersonalizedPoints() {
-        const items = [];
-
-        if (answers[0] && answers[0].value !== "Yes") {
-          items.push("It may be worth confirming whether your property is insured on a true landlord policy rather than a homeowners-style setup.");
-        }
-        if (answers[1] && answers[1].value !== "Yes") {
-          items.push("Loss of rental income protection deserves a closer look, especially if the property became unlivable after a covered claim.");
-        }
-        if (answers[2] && answers[2].value !== "$300k or more") {
-          items.push("Your liability protection may be weaker than ideal, or at least worth reviewing more closely.");
-        }
-        if (answers[3] && answers[3].value !== "Yes") {
-          items.push("Tenant-related damage or tenant-created issues may not be as clearly addressed as you would want.");
-        }
-        if (answers[4] && answers[4].value === "No") {
-          items.push("If lost rent would be hard to absorb out of pocket, income protection becomes even more important.");
-        }
-
-        if (items.length === 0) {
-          items.push("Your answers look stronger than average, but a second opinion can still confirm there are no hidden gaps.");
-        }
-
-        return items;
-      }
-
-      function showResults() {
-        const totalScore = calculateTotalScore();
-
-        questionsWrap.style.display = "none";
-        results.classList.add("active");
-        leadFormWrap.classList.add("active");
-        progressFill.style.width = "100%";
-        stepLabel.textContent = "Complete";
-
-        let level = "low";
-        let title = "You’re Better Covered Than Most";
-        let body =
-          "Your answers suggest your setup may be stronger than average, but it is still worth double-checking details to make sure everything is aligned properly.";
-        let bullets = [
-          "A quick review can confirm there are no hidden gaps.",
-          "It is still worth verifying loss of rent and water damage details.",
-          "Strong setups can still benefit from a second opinion."
-        ];
-
-        if (totalScore >= 8) {
-          level = "high";
-          title = "You May Have Significant Coverage Gaps";
-          body =
-            "Your answers suggest there is a strong chance your current policy could leave you exposed in a real claim.";
-          bullets = [
-            "You may not have a true landlord policy in place.",
-            "You may be missing loss of rent protection or stronger liability limits.",
-            "Reviewing this now could help prevent major out-of-pocket costs later."
-          ];
-        } else if (totalScore >= 4) {
-          level = "medium";
-          title = "Your Coverage May Have Some Gaps";
-          body =
-            "You are on the right track, but there are likely areas that deserve a closer look depending on how the property is set up.";
-          bullets = [
-            "There may be room to tighten up liability or income protection.",
-            "A quick review can give you a clearer picture of where you stand.",
-            "Moderate-risk setups are often fixable without major changes."
-          ];
-        }
-
-        scoreBadge.textContent = String(totalScore);
-        scoreBadge.className = `score-badge ${level}`;
-        resultTitle.textContent = title;
-        resultBody.textContent = body;
-        resultPoints.innerHTML = bullets.map(item => `<li>${item}</li>`).join("");
-
-        const personalized = buildPersonalizedPoints();
-        personalizedPoints.innerHTML = personalized.map(item => `<li>${item}</li>`).join("");
-
-        riskScoreInput.value = String(totalScore);
-        riskLevelInput.value = level;
-        answersInput.value = JSON.stringify(answers.map(a => a ? a.value : null));
-
-        leadFormWrap.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-
-      questions.forEach((question, idx) => {
-        question.querySelectorAll(".answer-btn").forEach(btn => {
-          btn.addEventListener("click", () => {
-            answers[idx] = {
-              value: btn.dataset.value || btn.textContent.trim(),
-              points: Number(btn.dataset.points || 0)
-            };
-
-            if (idx < totalSteps - 1) {
-              showStep(idx + 1);
-            } else {
-              showResults();
-            }
-          });
-        });
-      });
-
-      leadForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        successNote.style.display = "none";
-        errorNote.style.display = "none";
-        submitBtn.disabled = true;
-        submitBtn.textContent = "Submitting...";
-
-        refreshToolSummaryFields();
-
-        const originalNotes = notesField.value.trim();
-        const appendix = buildToolNotesAppendix();
-
-        if (appendix) {
-          notesField.value = originalNotes
-            ? `${originalNotes}\n\n--- Tool Outputs ---\n${appendix}`
-            : `--- Tool Outputs ---\n${appendix}`;
-        }
-
-        const formData = new FormData(leadForm);
-
-        try {
-          const response = await fetch(leadForm.action, {
-            method: leadForm.method,
-            body: formData,
-            headers: {
-              Accept: "application/json"
-            }
-          });
-
-          if (response.ok) {
-            successNote.style.display = "block";
-            leadForm.reset();
-            toolState.lossRent = "";
-            toolState.policyType = "";
-            toolState.gapChecklist = "";
-            refreshToolSummaryFields();
-          } else {
-            errorNote.style.display = "block";
-          }
-        } catch (err) {
-          errorNote.style.display = "block";
-        } finally {
-          notesField.value = originalNotes;
-          submitBtn.disabled = false;
-          submitBtn.textContent = "Request My Review";
-        }
-      });
-
-      // Loss of Rent Exposure Calculator
-      const rentCalcBtn = document.getElementById("rentCalcBtn");
-      const rentMonthly = document.getElementById("rentMonthly");
-      const rentMonths = document.getElementById("rentMonths");
-      const rentDeductible = document.getElementById("rentDeductible");
-      const rentCalcResult = document.getElementById("rentCalcResult");
-      const rentCalcHeadline = document.getElementById("rentCalcHeadline");
-      const rentCalcText = document.getElementById("rentCalcText");
-
-      rentCalcBtn.addEventListener("click", () => {
-        const monthly = Number(rentMonthly.value || 0);
-        const months = Number(rentMonths.value || 0);
-        const deductible = Number(rentDeductible.value || 0);
-        const exposure = (monthly * months) + deductible;
-
-        if (!monthly || !months) {
-          rentCalcHeadline.textContent = "Enter your monthly rent and a time period.";
-          rentCalcText.textContent = "This tool is just a simple estimate to help you visualize potential lost rental income exposure.";
-          toolState.lossRent = "Incomplete input.";
-          refreshToolSummaryFields();
-          rentCalcResult.classList.add("active");
-          return;
-        }
-
-        rentCalcHeadline.textContent = `Estimated exposure: $${exposure.toLocaleString()}`;
-        rentCalcText.textContent = `That includes about $${(monthly * months).toLocaleString()} in possible lost rent over ${months} month(s), plus an estimated deductible of $${deductible.toLocaleString()}. This is only a general illustration and not a guarantee of claim outcome or coverage.`;
-        toolState.lossRent = `Estimated exposure $${exposure.toLocaleString()} based on monthly rent $${monthly.toLocaleString()}, ${months} month(s), deductible $${deductible.toLocaleString()}.`;
-        refreshToolSummaryFields();
-        rentCalcResult.classList.add("active");
-      });
-
-      // Policy Type Checker
-      const policyCheckBtn = document.getElementById("policyCheckBtn");
-      const policyLiveThere = document.getElementById("policyLiveThere");
-      const policyRented = document.getElementById("policyRented");
-      const policyIncome = document.getElementById("policyIncome");
-      const policyCheckResult = document.getElementById("policyCheckResult");
-      const policyCheckHeadline = document.getElementById("policyCheckHeadline");
-      const policyCheckList = document.getElementById("policyCheckList");
-
-      policyCheckBtn.addEventListener("click", () => {
-        const liveThere = policyLiveThere.value;
-        const rented = policyRented.value;
-        const income = policyIncome.value;
-        const list = [];
-
-        if (rented === "yes" && income === "yes" && liveThere === "no") {
-          policyCheckHeadline.textContent = "This sounds like it should be reviewed as a true landlord setup.";
-          list.push("If the property is rented out and primarily used to generate rental income, it may deserve closer review than a standard homeowners-style setup.");
-        } else if (liveThere === "part") {
-          policyCheckHeadline.textContent = "This sounds like a mixed-use situation that deserves a closer look.";
-          list.push("Properties used part-time by the owner and part-time as rentals can be easy to misclassify.");
-        } else if (rented === "vacant") {
-          policyCheckHeadline.textContent = "Vacancy between tenants can still deserve a closer look.";
-          list.push("Some policies treat vacancy differently, even if the property is only vacant temporarily.");
-        } else {
-          policyCheckHeadline.textContent = "This may still be worth pressure-testing.";
-          list.push("Even when the setup sounds straightforward, it can still be useful to confirm whether the policy is aligned correctly.");
-        }
-
-        list.push("This tool is only educational and not a formal coverage determination.");
-        policyCheckList.innerHTML = list.map(item => `<li>${item}</li>`).join("");
-        toolState.policyType = `${policyCheckHeadline.textContent} ${list.join(" ")}`;
-        refreshToolSummaryFields();
-        policyCheckResult.classList.add("active");
-      });
-
-      // Coverage Gap Checklist
-      const gapCheckBtn = document.getElementById("gapCheckBtn");
-      const gapCheckResult = document.getElementById("gapCheckResult");
-      const gapCheckHeadline = document.getElementById("gapCheckHeadline");
-      const gapCheckText = document.getElementById("gapCheckText");
-
-      gapCheckBtn.addEventListener("click", () => {
-        const checks = [
-          document.getElementById("gapLandlordPolicy").checked,
-          document.getElementById("gapLossRent").checked,
-          document.getElementById("gapLiability").checked,
-          document.getElementById("gapWater").checked,
-          document.getElementById("gapOrdinance").checked
-        ];
-
-        const checkedCount = checks.filter(Boolean).length;
-        const missing = checks.length - checkedCount;
-
-        if (missing === 0) {
-          gapCheckHeadline.textContent = "You look more informed than most landlords.";
-          gapCheckText.textContent = "That said, even strong setups can still benefit from a second opinion to confirm there are no hidden blind spots.";
-        } else if (missing <= 2) {
-          gapCheckHeadline.textContent = `You may have ${missing} area${missing > 1 ? "s" : ""} worth double-checking.`;
-          gapCheckText.textContent = "That does not automatically mean you are underinsured, but it does suggest there may be pieces worth reviewing more closely.";
-        } else {
-          gapCheckHeadline.textContent = `You may have ${missing} potential gaps or unknowns.`;
-          gapCheckText.textContent = "If several of these boxes are uncertain, a quick coverage review may help you avoid surprises later.";
-        }
-
-        toolState.gapChecklist = `${gapCheckHeadline.textContent} ${gapCheckText.textContent}`;
-        refreshToolSummaryFields();
-        gapCheckResult.classList.add("active");
-      });
-
-      refreshToolSummaryFields();
-      showStep(0);
-    })();
-  </script>
+
+<div class="wrap">
+
+<div class="hero">
+<div class="badge">Rental Coverage Check</div>
+<h1>Is Your Rental Actually Covered?</h1>
+<p class="lead">Answer 5 quick questions to uncover potential coverage gaps.</p>
+</div>
+
+<div class="card">
+
+<div class="progress"><div class="progress-fill" id="progress"></div></div>
+
+<!-- QUESTIONS -->
+<div class="question active">
+<h3>Is your policy a landlord policy?</h3>
+<div class="answers">
+<div class="answer" data-points="0" data-label="Has landlord policy">Yes</div>
+<div class="answer" data-points="3" data-label="No landlord policy">No</div>
+<div class="answer" data-points="2" data-label="Unsure policy type">Not sure</div>
+</div>
+</div>
+
+<div class="question">
+<h3>Does it cover lost rental income?</h3>
+<div class="answers">
+<div class="answer" data-points="0" data-label="Has loss of rent">Yes</div>
+<div class="answer" data-points="3" data-label="No loss of rent">No</div>
+<div class="answer" data-points="2" data-label="Unsure loss of rent">Not sure</div>
+</div>
+</div>
+
+<div class="question">
+<h3>Do you know your liability limit?</h3>
+<div class="answers">
+<div class="answer" data-points="0" data-label="Strong liability">$300k+</div>
+<div class="answer" data-points="2" data-label="Weak liability">Lower</div>
+<div class="answer" data-points="2" data-label="Unknown liability">Not sure</div>
+</div>
+</div>
+
+<div class="question">
+<h3>Does your policy cover tenant damage?</h3>
+<div class="answers">
+<div class="answer" data-points="0" data-label="Covers tenant damage">Yes</div>
+<div class="answer" data-points="3" data-label="No tenant coverage">No</div>
+<div class="answer" data-points="2" data-label="Unsure tenant damage">Not sure</div>
+</div>
+</div>
+
+<div class="question">
+<h3>Could you cover 6 months of lost rent?</h3>
+<div class="answers">
+<div class="answer" data-points="0" data-label="Financial cushion">Yes</div>
+<div class="answer" data-points="3" data-label="No cushion">No</div>
+</div>
+</div>
+
+<!-- RESULT -->
+<div class="result" id="result">
+<div class="score" id="score"></div>
+<div class="risk" id="risk"></div>
+
+<ul class="bullets" id="bullets"></ul>
+
+<button class="btn primary" onclick="showForm()">Request My Coverage Review</button>
+<button class="btn secondary" onclick="location.reload()">Retake</button>
+</div>
+
+<!-- LEAD FORM -->
+<div class="lead-form" id="form">
+<h3>Get Your Coverage Reviewed</h3>
+
+<form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+<input type="text" name="name" placeholder="Name" required>
+<input type="email" name="email" placeholder="Email" required>
+<input type="tel" name="phone" placeholder="Phone" required>
+
+<input type="hidden" name="score" id="formScore">
+<input type="hidden" name="answers" id="formAnswers">
+<input type="hidden" name="source" value="ismyrentalcovered.com">
+
+<button class="btn primary">Submit</button>
+</form>
+</div>
+
+</div>
+
+<div class="footer">
+Dylan Haysbert — Farmers Insurance<br>
+Virginia Tam Insurance Agency<br>
+Coverage review only. Not binding.
+</div>
+
+</div>
+
+<script>
+let step=0;
+let score=0;
+let answers=[];
+
+const q=document.querySelectorAll(".question");
+const progress=document.getElementById("progress");
+
+document.querySelectorAll(".answer").forEach(btn=>{
+btn.onclick=()=>{
+score+=Number(btn.dataset.points);
+answers.push(btn.dataset.label);
+
+q[step].classList.remove("active");
+step++;
+
+progress.style.width=(step/q.length*100)+"%";
+
+if(step<q.length){
+q[step].classList.add("active");
+}else{
+showResult();
+}
+};
+});
+
+function showResult(){
+document.getElementById("result").style.display="block";
+document.getElementById("score").innerText=score;
+
+let risk="Low Risk";
+let bullets=[
+"Your setup looks stronger than average",
+"Still worth verifying coverage details"
+];
+
+if(score>=8){
+risk="High Risk — Likely Gaps";
+bullets=[
+"Possible wrong policy type",
+"Missing loss of rent coverage",
+"Higher liability exposure risk"
+];
+}else if(score>=4){
+risk="Moderate Risk — Some Gaps";
+bullets=[
+"Coverage may not be fully optimized",
+"Worth reviewing liability + income protection"
+];
+}
+
+document.getElementById("risk").innerText=risk;
+document.getElementById("bullets").innerHTML=bullets.map(b=>`<li>${b}</li>`).join("");
+
+document.getElementById("formScore").value=score;
+document.getElementById("formAnswers").value=answers.join(", ");
+}
+
+function showForm(){
+document.getElementById("form").style.display="block";
+document.getElementById("form").scrollIntoView({behavior:"smooth"});
+}
+</script>
+
 </body>
 </html>
